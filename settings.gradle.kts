@@ -13,8 +13,6 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "hackathon_2022"
-include ':presentation'
-include ':domain'
-include ':data'
-include ':data'
-include ':domain'
+include(":presentation")
+include(":domain")
+include(":data")
