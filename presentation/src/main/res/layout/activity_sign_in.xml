@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.hackathon_2022.ui.signin.SignInActivity">
+
+        <EditText
+            android:id="@+id/et_sign_in_phone_number"
+            style="@style/sign_edit_text"
+            android:hint="전화번호를 입력해주세요"
+            android:layout_marginTop="245dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/et_sign_in_password"
+            style="@style/sign_edit_text"
+            android:layout_marginTop="20dp"
+            android:hint="비밀번호를 입력해주세요"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_sign_in_phone_number" />
+
+        <Button
+            android:id="@+id/btn_sign_in"
+            style="@style/sign_btn"
+            android:text="로그인"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_sign_in_password" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
