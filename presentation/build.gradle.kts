@@ -63,7 +63,7 @@ dependencies {
 
     implementation(Dependency.Google.MATERIAL)
     implementation(Dependency.Google.HILT_ANDROID)
-    implementation("com.google.android.gms:play-services-maps:18.0.2")
+    implementation(Dependency.Google.GOOGLE_MAP)
     kapt(Dependency.Google.HILT_ANDROID_COMPILER)
 
     implementation(Dependency.Retrofit.RETROFIT)
