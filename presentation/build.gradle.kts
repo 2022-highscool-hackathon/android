@@ -64,6 +64,9 @@ dependencies {
     implementation(Dependency.Google.MATERIAL)
     implementation(Dependency.Google.HILT_ANDROID)
     implementation(Dependency.Google.GOOGLE_MAP)
+    implementation("androidx.appcompat:appcompat:1.5.1")
+    implementation("com.google.android.material:material:1.4.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     kapt(Dependency.Google.HILT_ANDROID_COMPILER)
 
     implementation(Dependency.Retrofit.RETROFIT)
