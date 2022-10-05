@@ -3,6 +3,7 @@ package com.example.hackathon_2022.ui.main
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,7 +13,9 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,6 +42,13 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             requestPermissions(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), 10)
             requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 10)
         }
+        val marker = MarkerOptions()
+        marker.apply {
+            position(position)
+            title("광주")
+            snippet("라마다 호텔")
+        }
+        googleMap.addMarker(marker)
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(position))
         googleMap.animateCamera(CameraUpdateFactory.zoomTo(15f))
     }
