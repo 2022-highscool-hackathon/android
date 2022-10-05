@@ -1,5 +1,6 @@
 package com.example.hackathon_2022.di
 
+import com.example.data.remote.api.UserAPI
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,5 +47,11 @@ object NetworkModule {
     @Singleton
     fun provideConverterFactory(): GsonConverterFactory {
         return GsonConverterFactory.create()
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserAPI(retrofit: Retrofit): UserAPI {
+        return retrofit.create(UserAPI::class.java)
     }
 }
