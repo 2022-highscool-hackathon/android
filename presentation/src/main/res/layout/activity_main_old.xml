@@ -30,10 +30,11 @@
             android:background="@color/white">
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/jobBtn"
+                style="@style/default_text"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginVertical="10dp"
-                android:layout_marginHorizontal="33dp"
+                android:layout_marginHorizontal="15dp"
                 android:layout_weight="3"
                 android:text="일자리"
                 android:textColor="@color/white"
@@ -41,28 +42,30 @@
             <View
                 android:layout_width="3dp"
                 android:layout_height="match_parent"
-                android:background="#9ADBFF"
+                android:background="@drawable/bg_divide"
                 android:layout_marginVertical="10dp"/>
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/dolbomiBtn"
+                style="@style/default_text"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginVertical="10dp"
-                android:layout_marginHorizontal="33dp"
+                android:layout_marginHorizontal="15dp"
                 android:layout_weight="3"
                 android:text="돌보미"
                 android:background="@null"/>
             <View
                 android:layout_width="3dp"
                 android:layout_height="match_parent"
-                android:background="#9ADBFF"
+                android:background="@drawable/bg_divide"
                 android:layout_marginVertical="10dp"/>
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/infoBtn"
+                style="@style/default_text"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginVertical="10dp"
-                android:layout_marginHorizontal="33dp"
+                android:layout_marginHorizontal="15dp"
                 android:layout_weight="3"
                 android:text="내 정보"
                 android:background="@null"/>
