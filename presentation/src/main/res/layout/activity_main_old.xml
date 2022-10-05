@@ -6,13 +6,13 @@
     <data>
         <variable
             name="mainOld"
-            type="com.example.hackathon_2022.ui.main_old.MainOldActivity" />
+            type="com.example.hackathon_2022.ui.main.MainOldActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.example.hackathon_2022.ui.main_old.MainOldActivity">
+        tools:context="com.example.hackathon_2022.ui.main.MainOldActivity">
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/mainFragmentContainer"

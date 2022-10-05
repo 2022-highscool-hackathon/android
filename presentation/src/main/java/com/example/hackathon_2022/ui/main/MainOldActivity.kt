@@ -1,4 +1,4 @@
-package com.example.hackathon_2022.ui.main_old
+package com.example.hackathon_2022.ui.main
 
 import android.widget.Button
 import com.example.hackathon_2022.ui.base.BaseActivity
@@ -20,20 +20,24 @@ class MainOldActivity : BaseActivity<ActivityMainOldBinding>(R.layout.activity_m
     }
 
     private fun initBottomNav() {
-        supportFragmentManager.beginTransaction().replace(R.id.mainFragmentContainer, JobFragment()).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.mainFragmentContainer, JobFragment())
+            .commit()
         binding.jobBtn.setOnClickListener {
-            navItemClick(it as Button, binding.dolbomiBtn, binding.infoBtn, true) {
-                supportFragmentManager.beginTransaction().replace(R.id.mainFragmentContainer, JobFragment()).commit()
+            navItemClick(it as Button, listOf(binding.dolbomiBtn, binding.infoBtn), true) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.mainFragmentContainer, JobFragment()).commit()
             }
         }
         binding.dolbomiBtn.setOnClickListener {
-            navItemClick(it as Button, binding.jobBtn, binding.infoBtn, true) {
-                supportFragmentManager.beginTransaction().replace(R.id.mainFragmentContainer, DolbomiFragment()).commit()
+            navItemClick(it as Button, listOf(binding.jobBtn, binding.infoBtn), true) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.mainFragmentContainer, DolbomiFragment()).commit()
             }
         }
         binding.infoBtn.setOnClickListener {
-            navItemClick(it as Button, binding.jobBtn, binding.dolbomiBtn, true) {
-                supportFragmentManager.beginTransaction().replace(R.id.mainFragmentContainer, InfoFragment()).commit()
+            navItemClick(it as Button, listOf(binding.jobBtn, binding.dolbomiBtn), true) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.mainFragmentContainer, InfoFragment()).commit()
             }
         }
     }
