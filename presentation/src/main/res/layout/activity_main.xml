@@ -6,13 +6,13 @@
     <data>
         <variable
             name="main"
-            type="com.example.hackathon_2022.MainActivity" />
+            type="com.example.hackathon_2022.ui.main.MainActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.example.hackathon_2022.MainActivity">
+        tools:context="com.example.hackathon_2022.ui.main.MainActivity">
 
         <fragment
             android:id="@+id/map"

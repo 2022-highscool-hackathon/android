@@ -39,6 +39,18 @@ android {
         dataBinding = true
         viewBinding = true
     }
+    packagingOptions.resources.excludes += setOf(
+        "META-INF/DEPENDENCIES",
+        "META-INF/LICENSE",
+        "META-INF/LICENSE.txt",
+        "META-INF/license.txt",
+        "META-INF/NOTICE",
+        "META-INF/NOTICE.txt",
+        "META-INF/INDEX.LIST",
+        "META-INF/notice.txt",
+        "META-INF/ASL2.0",
+        "META-INF/gradle/incremental.annotation.processors"
+    )
 }
 
 dependencies {

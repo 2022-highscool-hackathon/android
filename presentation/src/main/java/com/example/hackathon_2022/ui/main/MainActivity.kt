@@ -1,15 +1,15 @@
-package com.example.hackathon_2022
+package com.example.hackathon_2022.ui.main
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
 import com.example.presentation.R
 import com.example.presentation.databinding.ActivityMainBinding
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     lateinit var binding: ActivityMainBinding
     private lateinit var googleMap: GoogleMap

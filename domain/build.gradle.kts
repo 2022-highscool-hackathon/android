@@ -40,6 +40,8 @@ dependencies {
     implementation(Dependency.AndroidX.CONSTRAINT_LAYOUT)
 
     implementation(Dependency.Google.MATERIAL)
+    implementation(Dependency.Google.HILT_ANDROID)
+    implementation(Dependency.Google.HILT_ANDROID_COMPILER)
 
     implementation(Dependency.Retrofit.RETROFIT)
     implementation(Dependency.Retrofit.RETROFIT_CONVERTER_GSON)

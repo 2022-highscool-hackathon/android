@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
+        android:name="com.example.hackathon_2022.di.HackathonApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -22,7 +23,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBdjaUmlgEiRubUwlB1AFfSob-iFss7gLg" />
         <activity
-            android:name="com.example.hackathon_2022.MainActivity"
+            android:name="com.example.hackathon_2022.ui.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

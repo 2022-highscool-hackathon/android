@@ -6,6 +6,7 @@ object Versions {
     const val COMPILE_SDK_VERSION = 32
     const val MIN_SDK_VERSION = 30
     const val TARGET_SDK_VERSION = 32
+    const val GOOGLE_MAP_VERSION = "2.0.1"
     val JAVA_VERSION = JavaVersion.VERSION_1_8
 
     const val GRADLE_ANDROID = "7.0.4"
