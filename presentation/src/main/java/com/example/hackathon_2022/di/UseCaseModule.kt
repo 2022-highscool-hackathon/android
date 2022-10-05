@@ -1,10 +1,9 @@
 package com.example.hackathon_2022.di
 
+import com.example.domain.repository.JobRepository
 import com.example.domain.repository.UserRepository
-import com.example.domain.usecase.GetInfoUseCase
-import com.example.domain.usecase.LoginUseCase
-import com.example.domain.usecase.ResumeUseCase
-import com.example.domain.usecase.SignUpUseCase
+import com.example.domain.usecase.job.GetJobUseCase
+import com.example.domain.usecase.user.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,5 +27,13 @@ object UseCaseModule {
 
     @Provides
     @Singleton
+    fun provideDolbomiUseCase(userRepository: UserRepository) = DolbomiUseCase(userRepository)
+
+    @Provides
+    @Singleton
     fun provideResumeUseCase(userRepository: UserRepository) = ResumeUseCase(userRepository)
+
+    @Provides
+    @Singleton
+    fun provideGetJobUseCase(jobRepository: JobRepository) = GetJobUseCase(jobRepository)
 }
