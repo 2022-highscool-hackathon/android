@@ -1,5 +1,6 @@
 package com.example.data.remote.api
 
+import com.example.data.remote.request.DolbomiRequest
 import com.example.data.remote.request.LoginRequest
 import com.example.data.remote.request.ResumeRequest
 import com.example.data.remote.request.SignUpRequest
@@ -26,6 +27,11 @@ interface UserAPI {
     suspend fun getInfo(
         @Header("Authorization") key: String
     ): Response<InfoResponse>
+
+    @POST("user/dolbomi")
+    suspend fun dolbomi(
+        @Body request: DolbomiRequest
+    ): Response<Void>
 
     @POST("user/resume")
     suspend fun resume(

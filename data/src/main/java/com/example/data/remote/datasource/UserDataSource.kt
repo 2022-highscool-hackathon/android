@@ -1,5 +1,6 @@
 package com.example.data.remote.datasource
 
+import com.example.data.remote.request.DolbomiRequest
 import com.example.data.remote.request.LoginRequest
 import com.example.data.remote.request.ResumeRequest
 import com.example.data.remote.request.SignUpRequest
@@ -10,5 +11,6 @@ interface UserDataSource {
     suspend fun signUp(request: SignUpRequest): Void?
     suspend fun login(request: LoginRequest): LoginResponse?
     suspend fun getInfo(key: String): InfoResponse?
+    suspend fun dolbomi(request: DolbomiRequest): Void?
     suspend fun resume(request: ResumeRequest): Void?
 }
