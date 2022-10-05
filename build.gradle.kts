@@ -9,7 +9,6 @@ buildscript {
         classpath (Dependency.GradlePlugin.GRADLE_KOTLIN)
         classpath (Dependency.GradlePlugin.GRADLE_HILT)
         classpath(Dependency.GradlePlugin.GOOGLE_MAP)
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10")
     }
 }
 
