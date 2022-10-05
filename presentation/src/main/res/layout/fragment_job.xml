@@ -21,7 +21,7 @@
             android:layout_marginHorizontal="12.5dp">
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/allBtn"
-                style="@style/default_text"
+                style="@style/text_600_18"
                 android:text="전체보기"
                 android:textColor="@color/white"
                 android:layout_width="0dp"
@@ -31,7 +31,7 @@
                 android:layout_marginHorizontal="2.5dp"/>
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/recommendBtn"
-                style="@style/default_text"
+                style="@style/text_600_18"
                 android:layout_width="0dp"
                 android:text="추천 일자리"
                 android:background="@drawable/bg_tab_unselected_white"
@@ -40,7 +40,7 @@
                 android:layout_marginHorizontal="2.5dp"/>
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/nearBtn"
-                style="@style/default_text"
+                style="@style/text_600_18"
                 android:text="가까운 일자리"
                 android:background="@drawable/bg_tab_unselected_white"
                 android:layout_width="0dp"

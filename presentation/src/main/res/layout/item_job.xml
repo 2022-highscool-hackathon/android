@@ -12,7 +12,7 @@
 
         <TextView
             android:id="@+id/coTxt"
-            style="@style/default_text"
+            style="@style/text_600_18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="회사/점포명"
@@ -25,7 +25,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/job_text"
+            style="@style/text_400_16"
             android:text="업무종류"
             android:layout_marginStart="9dp"
             app:layout_constraintStart_toEndOf="@+id/coTxt"
@@ -33,7 +33,7 @@
 
         <TextView
             android:id="@+id/cityTxt"
-            style="@style/job_text"
+            style="@style/text_400_15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="위치 : (구/군)"
@@ -44,7 +44,7 @@
 
         <TextView
             android:id="@+id/timeTxt"
-            style="@style/job_text"
+            style="@style/text_400_15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="시간 : 0:00 ~ 0:00"
@@ -56,7 +56,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/job_text"
+            style="@style/text_400_15"
             android:text="시급 : 00,000원"
             android:layout_marginTop="10dp"
             android:layout_marginStart="21dp"
