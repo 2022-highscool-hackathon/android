@@ -1,6 +1,7 @@
 package com.example.data.remote.datasource
 
 import com.example.data.remote.api.UserAPI
+import com.example.data.remote.request.DolbomiRequest
 import com.example.data.remote.request.LoginRequest
 import com.example.data.remote.request.ResumeRequest
 import com.example.data.remote.request.SignUpRequest
@@ -22,6 +23,10 @@ class UserDataSourceImpl @Inject constructor(
 
     override suspend fun getInfo(key: String): InfoResponse? {
         return safeApiCall { userAPI.getInfo(key = key) }?.body()
+    }
+
+    override suspend fun dolbomi(request: DolbomiRequest): Void? {
+        return safeApiCall { userAPI.dolbomi(request = request) }?.body()
     }
 
     override suspend fun resume(request: ResumeRequest): Void? {

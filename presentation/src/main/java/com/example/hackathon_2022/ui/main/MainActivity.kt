@@ -3,10 +3,13 @@ package com.example.hackathon_2022.ui.main
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.presentation.R
 import com.example.presentation.databinding.ActivityMainBinding
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -34,22 +37,17 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(p0: GoogleMap) {
         googleMap = p0
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        var position = LatLng(37.56, 126.97)
-        if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            val location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-            position = LatLng(location?.latitude!!, location?.longitude)
-        } else {
-            requestPermissions(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), 10)
-            requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 10)
-        }
+        val location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
         val marker = MarkerOptions()
         marker.apply {
-            position(position)
+            val bitmapDrawable = resources.getDrawable(R.drawable.home) as BitmapDrawable
+            val bitmap = bitmapDrawable.bitmap
+            position(LatLng(location?.latitude!!, location?.longitude))
             title("광주")
             snippet("라마다 호텔")
+            icon(BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 70, 70, false)))
         }
         googleMap.addMarker(marker)
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(position))
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15f))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(location?.latitude!!, location?.longitude), 15f))
     }
 }

@@ -1,5 +1,6 @@
 package com.example.hackathon_2022.di
 
+import com.example.data.remote.api.JobAPI
 import com.example.data.remote.api.UserAPI
 import dagger.Module
 import dagger.Provides
@@ -53,5 +54,11 @@ object NetworkModule {
     @Singleton
     fun provideUserAPI(retrofit: Retrofit): UserAPI {
         return retrofit.create(UserAPI::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideJobAPI(retrofit: Retrofit): JobAPI {
+        return retrofit.create(JobAPI::class.java)
     }
 }

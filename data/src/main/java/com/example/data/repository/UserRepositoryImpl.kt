@@ -5,6 +5,7 @@ import com.example.data.remote.request.toRequest
 import com.example.data.remote.response.toEntity
 import com.example.domain.entity.InfoEntity
 import com.example.domain.entity.LoginEntity
+import com.example.domain.param.DolbomiParam
 import com.example.domain.param.LoginParam
 import com.example.domain.param.ResumeParam
 import com.example.domain.param.SignUpParam
@@ -24,6 +25,10 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun getInfo(key: String): InfoEntity? {
         return userDataSource.getInfo(key = key)?.toEntity()
+    }
+
+    override suspend fun dolbomi(request: DolbomiParam): Void? {
+        return userDataSource.dolbomi(request = request.toRequest())
     }
 
     override suspend fun resume(request: ResumeParam): Void? {
