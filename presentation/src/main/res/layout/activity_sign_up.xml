@@ -15,7 +15,7 @@
             android:layout_height="match_parent" />
 
         <ImageButton
-            android:id="@+id/btn_sign_up"
+            android:id="@+id/btn_sign_up_back"
             style="@style/all_btn_back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
