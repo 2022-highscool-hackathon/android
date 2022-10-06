@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="addSupport"
+            type="com.example.hackathon_2022.ui.add.AddSupportActivity" />
     </data>
 
     <ScrollView
@@ -36,6 +38,15 @@
                 android:background="#D9D9D9"
                 app:layout_constraintTop_toBottomOf="@id/back" />
 
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/ic_add_img"
+                app:layout_constraintStart_toStartOf="@id/addImageBtn"
+                app:layout_constraintEnd_toEndOf="@id/addImageBtn"
+                app:layout_constraintTop_toTopOf="@id/addImageBtn"
+                app:layout_constraintBottom_toBottomOf="@id/addImageBtn"/>
+
             <LinearLayout
                 android:layout_marginTop="20dp"
                 android:id="@+id/addressLayout"
@@ -62,6 +73,7 @@
                         android:id="@+id/addressNumber"
                         android:gravity="center_vertical"
                         android:layout_width="123dp"
+                        android:paddingLeft="18dp"
                         android:layout_height="match_parent"
                         android:background="@color/white" />
 
@@ -231,6 +243,7 @@
                             android:layout_marginEnd="9dp"/>
 
                         <TextView
+                            android:id="@+id/endTimeTxt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="18sp"
@@ -268,6 +281,7 @@
                         style="@style/text_400_13"
                         android:textColor="@color/black"
                         android:layout_width="0dp"
+                        android:onClick="clickDay"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@color/white"
@@ -287,6 +301,7 @@
                         android:layout_weight="1"
                         android:background="@color/white"
                         android:gravity="center"
+                        android:onClick="clickDay"
                         android:paddingHorizontal="8dp"
                         android:text="화" />
 
@@ -301,6 +316,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onClick="clickDay"
                         android:background="@color/white"
                         android:gravity="center"
                         android:paddingHorizontal="8dp"
@@ -317,6 +333,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onClick="clickDay"
                         android:background="@color/white"
                         android:gravity="center"
                         android:paddingHorizontal="8dp"
@@ -333,6 +350,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onClick="clickDay"
                         android:background="@color/white"
                         android:gravity="center"
                         android:paddingHorizontal="8dp"
@@ -348,6 +366,7 @@
                         android:textColor="@color/black"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:onClick="clickDay"
                         android:layout_weight="1"
                         android:background="@color/white"
                         android:gravity="center"
@@ -364,6 +383,7 @@
                         android:textColor="@color/black"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:onClick="clickDay"
                         android:layout_weight="1"
                         android:background="@color/white"
                         android:gravity="center"
