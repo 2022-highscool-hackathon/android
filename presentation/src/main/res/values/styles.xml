@@ -160,6 +160,12 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="text_600_23">
+        <item name="fontFamily">@font/pretendard_semibold</item>
+        <item name="fontWeight">600</item>
+        <item name="android:textSize">23sp</item>
+    </style>
+
     <style name="text_700_20">
         <item name="fontFamily">@font/pretendard_semibold</item>
         <item name="fontWeight">700</item>
