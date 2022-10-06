@@ -1,11 +1,10 @@
 package com.example.domain.usecase.user
 
-import com.example.domain.param.user.SignUpParam
 import com.example.domain.repository.UserRepository
 import javax.inject.Inject
 
-class SignUpUseCase @Inject constructor(
+class CaregiversUseCase @Inject constructor(
     private val userRepository: UserRepository
 ) {
-    suspend fun signUp(request: SignUpParam) = userRepository.signUp(request)
+    suspend fun caregivers(key: String) = userRepository.caregivers(key)
 }

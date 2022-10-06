@@ -1,6 +1,6 @@
-package com.example.data.remote.request
+package com.example.data.remote.request.user
 
-import com.example.domain.param.LoginParam
+import com.example.domain.param.user.LoginParam
 import com.google.gson.annotations.SerializedName
 
 data class LoginRequest(

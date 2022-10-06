@@ -1,6 +1,6 @@
-package com.example.data.remote.response
+package com.example.data.remote.response.user
 
-import com.example.domain.entity.InfoEntity
+import com.example.domain.entity.user.InfoEntity
 import com.google.gson.annotations.SerializedName
 
 data class InfoResponse(

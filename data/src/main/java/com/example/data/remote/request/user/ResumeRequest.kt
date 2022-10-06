@@ -1,6 +1,6 @@
-package com.example.data.remote.request
+package com.example.data.remote.request.user
 
-import com.example.domain.param.ResumeParam
+import com.example.domain.param.user.ResumeParam
 import com.google.gson.annotations.SerializedName
 
 data class ResumeRequest(

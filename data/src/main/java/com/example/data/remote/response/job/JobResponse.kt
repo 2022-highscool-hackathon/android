@@ -1,6 +1,6 @@
-package com.example.data.remote.response
+package com.example.data.remote.response.job
 
-import com.example.domain.entity.JobEntity
+import com.example.domain.entity.job.JobEntity
 import com.google.gson.annotations.SerializedName
 
 data class JobResponse(

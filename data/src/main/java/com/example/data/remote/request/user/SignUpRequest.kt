@@ -1,6 +1,6 @@
-package com.example.data.remote.request
+package com.example.data.remote.request.user
 
-import com.example.domain.param.SignUpParam
+import com.example.domain.param.user.SignUpParam
 import com.google.gson.annotations.SerializedName
 
 data class SignUpRequest(

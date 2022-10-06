@@ -1,6 +1,6 @@
 package com.example.domain.usecase.user
 
-import com.example.domain.param.ResumeParam
+import com.example.domain.param.user.ResumeParam
 import com.example.domain.repository.UserRepository
 import javax.inject.Inject
 

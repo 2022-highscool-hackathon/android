@@ -1,12 +1,8 @@
 package com.example.data.remote.datasource
 
 import com.example.data.remote.api.UserAPI
-import com.example.data.remote.request.DolbomiRequest
-import com.example.data.remote.request.LoginRequest
-import com.example.data.remote.request.ResumeRequest
-import com.example.data.remote.request.SignUpRequest
-import com.example.data.remote.response.InfoResponse
-import com.example.data.remote.response.LoginResponse
+import com.example.data.remote.request.user.*
+import com.example.data.remote.response.user.*
 import com.example.data.utils.BaseDataSource
 import javax.inject.Inject
 
@@ -29,7 +25,15 @@ class UserDataSourceImpl @Inject constructor(
         return safeApiCall { userAPI.dolbomi(request = request) }?.body()
     }
 
+    override suspend fun age(request: AgeRequest): Void? {
+        return safeApiCall { userAPI.age(request = request) }?.body()
+    }
+
     override suspend fun resume(request: ResumeRequest): Void? {
         return safeApiCall { userAPI.resume(request = request) }?.body()
+    }
+
+    override suspend fun caregivers(key: String): Void? {
+        return safeApiCall { userAPI.caregivers(key = key) }?.body()
     }
 }

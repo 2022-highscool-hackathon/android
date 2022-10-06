@@ -1,11 +1,7 @@
 package com.example.data.remote.api
 
-import com.example.data.remote.request.DolbomiRequest
-import com.example.data.remote.request.LoginRequest
-import com.example.data.remote.request.ResumeRequest
-import com.example.data.remote.request.SignUpRequest
-import com.example.data.remote.response.InfoResponse
-import com.example.data.remote.response.LoginResponse
+import com.example.data.remote.request.user.*
+import com.example.data.remote.response.user.*
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -33,8 +29,18 @@ interface UserAPI {
         @Body request: DolbomiRequest
     ): Response<Void>
 
+    @POST("user/age")
+    suspend fun age(
+        @Body request: AgeRequest
+    ): Response<Void>
+
     @POST("user/resume")
     suspend fun resume(
         @Body request: ResumeRequest
+    ): Response<Void>
+
+    @POST("user/caregivers")
+    suspend fun caregivers(
+        @Header("Authorization") key: String
     ): Response<Void>
 }

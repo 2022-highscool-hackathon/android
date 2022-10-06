@@ -1,4 +1,4 @@
-package com.example.domain.entity
+package com.example.domain.entity.job
 
 data class JobEntity(
     val city: String,

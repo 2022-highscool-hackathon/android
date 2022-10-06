@@ -1,4 +1,4 @@
-package com.example.domain.param
+package com.example.domain.param.user
 
 data class ResumeParam(
     val userCode: String,
