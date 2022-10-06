@@ -60,6 +60,13 @@
         <item name="android:layout_marginStart">14dp</item>
     </style>
 
+    <style name="logo">
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:src">@drawable/ic_logo</item>
+        <item name="android:layout_marginTop">26dp</item>
+    </style>
+
     <style name="old_radio_btn">
         <item name="android:layout_width">140dp</item>
         <item name="android:layout_height">50dp</item>

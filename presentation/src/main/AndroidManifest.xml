@@ -44,10 +44,15 @@
 
         <activity
             android:name="com.example.hackathon_2022.ui.main.MainOldActivity"
-            android:exported="false">
+            android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity
@@ -63,15 +68,10 @@
         </activity>
 
         <activity android:name="com.example.hackathon_2022.ui.main.MainOwnerActivity"
-            android:exported="true">
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity android:name="com.example.hackathon_2022.ui.detail_job.DetailJobActivity"
