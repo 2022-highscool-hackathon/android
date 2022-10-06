@@ -1,10 +1,14 @@
 package com.example.hackathon_2022.ui.add
 
 import android.app.Dialog
+import android.app.TimePickerDialog
 import android.net.http.SslError
 import android.os.Message
+import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
+import android.widget.TextView
+import android.widget.TimePicker
 import com.example.hackathon_2022.ui.base.BaseActivity
 import com.example.presentation.R
 import com.example.presentation.databinding.ActivityAddSupportBinding
@@ -14,12 +18,54 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class AddSupportActivity: BaseActivity<ActivityAddSupportBinding>(R.layout.activity_add_support){
+
+    private val startListener = TimePickerDialog.OnTimeSetListener { p0, p1, p2 -> binding.startTimeTxt.text = "${p1} : ${p2}" }
+    private val endListener = TimePickerDialog.OnTimeSetListener { p0, p1, p2 -> binding.endTimeTxt.text = "${p1} : ${p2}" }
+
     override fun initView() {
         clickBack()
         clickFindAddress()
+        clickStartTime()
+        clickEntTime()
+        binding.supportBtn.setOnClickListener {
+            finish()
+        }
     }
 
     override fun observeEvent() {
+    }
+
+    fun clickDay(view: View) {
+        val txt = view as TextView
+        if(!txt.isSelected) {
+            txt.setTextColor(resources.getColor(R.color.white))
+            txt.setBackgroundResource(R.color.main)
+            txt.isSelected = true
+        } else {
+            txt.setTextColor(resources.getColor(R.color.black))
+            txt.setBackgroundResource(R.color.white)
+            txt.isSelected = false
+        }
+    }
+
+    private fun clickStartTime() {
+        binding.startTime.setOnClickListener {
+            val dialog = TimePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar, startListener, 9, 0, true)
+            dialog.apply {
+                window?.setBackgroundDrawableResource(R.color.transparent)
+                show()
+            }
+        }
+    }
+
+    private fun clickEntTime() {
+        binding.endTime.setOnClickListener {
+            val dialog = TimePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar, endListener, 18, 0, true)
+            dialog.apply {
+                window?.setBackgroundDrawableResource(R.color.transparent)
+                show()
+            }
+        }
     }
 
     private fun clickBack() {

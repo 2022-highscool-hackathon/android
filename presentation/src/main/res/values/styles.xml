@@ -60,6 +60,13 @@
         <item name="android:layout_marginStart">14dp</item>
     </style>
 
+    <style name="logo">
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:src">@drawable/ic_logo</item>
+        <item name="android:layout_marginTop">26dp</item>
+    </style>
+
     <style name="old_radio_btn">
         <item name="android:layout_width">140dp</item>
         <item name="android:layout_height">50dp</item>
@@ -112,16 +119,40 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
-    <style name="text_400_16">
+    <style name="text_400_12">
         <item name="fontFamily">@font/pretendard_regular</item>
         <item name="fontWeight">400</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="text_400_13">
+        <item name="fontFamily">@font/pretendard_regular</item>
+        <item name="fontWeight">400</item>
+        <item name="android:textSize">13sp</item>
     </style>
 
     <style name="text_400_15">
         <item name="fontFamily">@font/pretendard_regular</item>
         <item name="fontWeight">400</item>
         <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="text_400_16">
+        <item name="fontFamily">@font/pretendard_regular</item>
+        <item name="fontWeight">400</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="text_600_13">
+        <item name="fontFamily">@font/pretendard_semibold</item>
+        <item name="fontWeight">600</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="text_600_15">
+        <item name="fontFamily">@font/pretendard_semibold</item>
+        <item name="fontWeight">600</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
     <style name="text_600_18">
@@ -134,6 +165,19 @@
         <item name="fontFamily">@font/pretendard_semibold</item>
         <item name="fontWeight">600</item>
         <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="text_600_23">
+        <item name="fontFamily">@font/pretendard_semibold</item>
+        <item name="fontWeight">600</item>
+        <item name="android:textSize">23sp</item>
+    </style>
+
+    <style name="text_700_18">
+        <item name="fontFamily">@font/pretendard_semibold</item>
+        <item name="fontWeight">700</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="text_700_20">

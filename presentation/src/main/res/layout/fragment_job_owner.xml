@@ -13,14 +13,14 @@
         <LinearLayout
             android:id="@+id/topMenu"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="40dp"
             android:orientation="horizontal"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="4dp"
             android:layout_marginHorizontal="12dp">
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/allBtn"
-                style="@style/text_600_18"
+                style="@style/text_600_15"
                 android:layout_width="0dp"
                 android:text="전체보기"
                 android:textColor="@color/white"
@@ -30,7 +30,7 @@
                 android:layout_marginHorizontal="3dp"/>
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/mapBtn"
-                style="@style/text_600_18"
+                style="@style/text_600_15"
                 android:text="지도보기"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="addSupport"
+            type="com.example.hackathon_2022.ui.add.AddSupportActivity" />
     </data>
 
     <ScrollView
@@ -28,6 +30,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <ImageView
+                style="@style/logo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
             <View
                 android:id="@+id/addImageBtn"
                 android:layout_width="match_parent"
@@ -36,7 +44,17 @@
                 android:background="#D9D9D9"
                 app:layout_constraintTop_toBottomOf="@id/back" />
 
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/ic_add_img"
+                app:layout_constraintStart_toStartOf="@id/addImageBtn"
+                app:layout_constraintEnd_toEndOf="@id/addImageBtn"
+                app:layout_constraintTop_toTopOf="@id/addImageBtn"
+                app:layout_constraintBottom_toBottomOf="@id/addImageBtn"/>
+
             <LinearLayout
+                android:layout_marginTop="20dp"
                 android:id="@+id/addressLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -45,6 +63,7 @@
                 app:layout_constraintTop_toBottomOf="@id/addImageBtn">
 
                 <TextView
+                    style="@style/text_400_13"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
@@ -60,6 +79,7 @@
                         android:id="@+id/addressNumber"
                         android:gravity="center_vertical"
                         android:layout_width="123dp"
+                        android:paddingLeft="18dp"
                         android:layout_height="match_parent"
                         android:background="@color/white" />
 
@@ -69,6 +89,8 @@
                         android:background="#33000000" />
 
                     <androidx.appcompat.widget.AppCompatButton
+                        style="@style/text_400_12"
+                        android:textColor="#80000000"
                         android:id="@+id/findAddress"
                         android:layout_width="87dp"
                         android:layout_height="match_parent"
@@ -77,6 +99,8 @@
                 </LinearLayout>
 
                 <TextView
+                    style="@style/text_400_12"
+                    android:paddingLeft="18dp"
                     android:id="@+id/address"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
@@ -85,6 +109,7 @@
                     android:background="@color/white" />
 
                 <EditText
+                    style="@style/text_400_12"
                     android:layout_width="match_parent"
                     android:layout_height="33dp"
                     android:layout_marginTop="4dp"
@@ -104,12 +129,15 @@
                 app:layout_constraintTop_toBottomOf="@id/addressLayout">
 
                 <TextView
+                    style="@style/text_400_13"
+                    android:textColor="@color/black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
                     android:text="업무 내용" />
 
                 <TextView
+                    style="@style/text_400_12"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginTop="4dp"
@@ -130,12 +158,15 @@
                 app:layout_constraintTop_toBottomOf="@id/workContentLayout">
 
                 <TextView
+                    style="@style/text_400_13"
+                    android:textColor="@color/black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
                     android:text="업무 형태" />
 
                 <TextView
+                    style="@style/text_400_12"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginTop="4dp"
@@ -156,6 +187,8 @@
                 app:layout_constraintTop_toBottomOf="@id/workShapeLayout">
 
                 <TextView
+                    style="@style/text_400_13"
+                    android:textColor="@color/black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
@@ -168,12 +201,23 @@
                     android:orientation="horizontal">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/startTime"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="5"
                         android:background="@color/white">
+                        
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_down"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_marginEnd="9dp"/>
 
                         <TextView
+                            android:id="@+id/startTimeTxt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="18sp"
@@ -189,12 +233,23 @@
                         android:layout_weight="0.5" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/endTime"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="5"
                         android:background="@color/white">
 
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_down"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_marginEnd="9dp"/>
+
                         <TextView
+                            android:id="@+id/endTimeTxt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="18sp"
@@ -216,6 +271,8 @@
                 app:layout_constraintTop_toBottomOf="@id/workTimeLayout">
 
                 <TextView
+                    style="@style/text_400_13"
+                    android:textColor="@color/black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
@@ -227,7 +284,10 @@
                     android:layout_marginTop="4dp">
 
                     <TextView
+                        style="@style/text_400_13"
+                        android:textColor="@color/black"
                         android:layout_width="0dp"
+                        android:onClick="clickDay"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@color/white"
@@ -240,11 +300,14 @@
                         android:layout_weight="0.5" />
 
                     <TextView
+                        style="@style/text_400_13"
+                        android:textColor="@color/black"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@color/white"
                         android:gravity="center"
+                        android:onClick="clickDay"
                         android:paddingHorizontal="8dp"
                         android:text="화" />
 
@@ -254,9 +317,12 @@
                         android:layout_weight="0.5" />
 
                     <TextView
+                        style="@style/text_400_13"
+                        android:textColor="@color/black"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onClick="clickDay"
                         android:background="@color/white"
                         android:gravity="center"
                         android:paddingHorizontal="8dp"
@@ -268,9 +334,12 @@
                         android:layout_weight="0.5" />
 
                     <TextView
+                        style="@style/text_400_13"
+                        android:textColor="@color/black"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onClick="clickDay"
                         android:background="@color/white"
                         android:gravity="center"
                         android:paddingHorizontal="8dp"
@@ -282,9 +351,12 @@
                         android:layout_weight="0.5" />
 
                     <TextView
+                        style="@style/text_400_13"
+                        android:textColor="@color/black"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onClick="clickDay"
                         android:background="@color/white"
                         android:gravity="center"
                         android:paddingHorizontal="8dp"
@@ -296,8 +368,11 @@
                         android:layout_weight="0.5" />
 
                     <TextView
+                        style="@style/text_400_13"
+                        android:textColor="@color/black"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:onClick="clickDay"
                         android:layout_weight="1"
                         android:background="@color/white"
                         android:gravity="center"
@@ -310,8 +385,11 @@
                         android:layout_weight="0.5" />
 
                     <TextView
+                        style="@style/text_400_13"
+                        android:textColor="@color/black"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:onClick="clickDay"
                         android:layout_weight="1"
                         android:background="@color/white"
                         android:gravity="center"
@@ -329,6 +407,8 @@
                 app:layout_constraintTop_toBottomOf="@id/workDayLayout">
 
                 <TextView
+                    style="@style/text_400_13"
+                    android:textColor="@color/black"
                     android:id="@+id/money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -337,8 +417,12 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <View
+                <EditText
+                    style="@style/text_400_12"
                     android:layout_width="160dp"
+                    android:hint="시급을 입력해주세요"
+                    android:paddingLeft="18dp"
+                    android:inputType="number"
                     android:layout_height="30dp"
                     android:layout_marginTop="4dp"
                     android:background="@color/white"
@@ -347,6 +431,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
+                style="@style/text_400_13"
                 android:id="@+id/etcLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -356,12 +441,15 @@
                 app:layout_constraintTop_toBottomOf="@id/moneyLayout">
 
                 <TextView
+                    style="@style/text_400_13"
+                    android:textColor="@color/black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
                     android:text="기타" />
 
                 <EditText
+                    style="@style/text_400_12"
                     android:layout_width="match_parent"
                     android:layout_height="33dp"
                     android:layout_marginTop="4dp"
@@ -372,12 +460,14 @@
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/supportBtn"
+                style="@style/text_600_15"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginTop="84dp"
                 android:layout_marginBottom="11dp"
-                android:background="#9ADBFF"
+                android:background="@drawable/bg_btn"
                 android:text="등록하기"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"

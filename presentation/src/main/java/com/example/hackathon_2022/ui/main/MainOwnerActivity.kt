@@ -4,6 +4,7 @@ import android.widget.Button
 import com.example.hackathon_2022.ui.base.BaseActivity
 import com.example.hackathon_2022.ui.dolbomi.DolbomiFragment
 import com.example.hackathon_2022.ui.info.InfoFragment
+import com.example.hackathon_2022.ui.info.InfoOwnerFragment
 import com.example.hackathon_2022.ui.job.JobFragment
 import com.example.hackathon_2022.ui.job.JobOwnerFragment
 import com.example.hackathon_2022.utils.navItemClick
@@ -30,7 +31,7 @@ class MainOwnerActivity: BaseActivity<ActivityMainOwnerBinding>(R.layout.activit
         binding.infoBtn.setOnClickListener {
             navItemClick(it as Button, listOf(binding.jobBtn), true) {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.mainFragmentContainer, InfoFragment()).commit()
+                    .replace(R.id.mainFragmentContainer, InfoOwnerFragment()).commit()
             }
         }
     }

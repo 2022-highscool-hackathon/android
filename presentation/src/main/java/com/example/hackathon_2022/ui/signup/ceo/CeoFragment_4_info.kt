@@ -13,8 +13,9 @@ import com.example.presentation.databinding.FragmentCeo4InfoBinding
 
 class CeoFragment_4_info : BaseFragment<FragmentCeo4InfoBinding>(R.layout.fragment_ceo_4_info) {
     override fun initView() {
-        binding.btnCeoInfo.setOnClickListener { 
-            startActivity(Intent(requireContext(),MainOwnerActivity::class.java))
+        binding.btnCeoInfo.setOnClickListener {
+            startActivity(Intent(context, MainOwnerActivity::class.java))
+            activity?.finish()
         }
     }
 
