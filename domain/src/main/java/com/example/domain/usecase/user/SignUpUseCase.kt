@@ -1,6 +1,6 @@
 package com.example.domain.usecase.user
 
-import com.example.domain.param.SignUpParam
+import com.example.domain.param.user.SignUpParam
 import com.example.domain.repository.UserRepository
 import javax.inject.Inject
 

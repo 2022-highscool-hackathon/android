@@ -1,14 +1,11 @@
 package com.example.data.repository
 
 import com.example.data.remote.datasource.UserDataSource
-import com.example.data.remote.request.toRequest
-import com.example.data.remote.response.toEntity
-import com.example.domain.entity.InfoEntity
-import com.example.domain.entity.LoginEntity
-import com.example.domain.param.DolbomiParam
-import com.example.domain.param.LoginParam
-import com.example.domain.param.ResumeParam
-import com.example.domain.param.SignUpParam
+import com.example.data.remote.request.user.*
+import com.example.data.remote.response.user.*
+import com.example.domain.entity.user.InfoEntity
+import com.example.domain.entity.user.LoginEntity
+import com.example.domain.param.user.*
 import com.example.domain.repository.UserRepository
 import javax.inject.Inject
 
@@ -31,7 +28,15 @@ class UserRepositoryImpl @Inject constructor(
         return userDataSource.dolbomi(request = request.toRequest())
     }
 
+    override suspend fun age(request: AgeParam): Void? {
+        return userDataSource.age(request = request.toRequest())
+    }
+
     override suspend fun resume(request: ResumeParam): Void? {
         return userDataSource.resume(request = request.toRequest())
+    }
+
+    override suspend fun caregivers(key: String): Void? {
+        return userDataSource.caregivers(key = key)
     }
 }

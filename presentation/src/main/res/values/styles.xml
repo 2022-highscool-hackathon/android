@@ -58,4 +58,35 @@
         <item name="android:layout_marginTop">13dp</item>
         <item name="android:layout_marginStart">13dp</item>
     </style>
+
+    <style name="text_400_16">
+        <item name="fontFamily">@font/pretendard_regular</item>
+        <item name="fontWeight">400</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="text_400_15">
+        <item name="fontFamily">@font/pretendard_regular</item>
+        <item name="fontWeight">400</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="text_600_18">
+        <item name="fontFamily">@font/pretendard_semibold</item>
+        <item name="fontWeight">600</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="text_600_20">
+        <item name="fontFamily">@font/pretendard_semibold</item>
+        <item name="fontWeight">600</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="text_700_20">
+        <item name="fontFamily">@font/pretendard_semibold</item>
+        <item name="fontWeight">700</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 </resources>
