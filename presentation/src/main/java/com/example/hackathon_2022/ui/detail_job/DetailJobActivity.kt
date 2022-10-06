@@ -9,6 +9,7 @@ import com.example.presentation.databinding.ActivityJobDetailBinding
 class DetailJobActivity: BaseActivity<ActivityJobDetailBinding>(R.layout.activity_job_detail) {
     override fun initView() {
         clickCall()
+        binding.back.setOnClickListener { finish() }
     }
 
     override fun observeEvent() {

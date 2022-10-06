@@ -27,6 +27,9 @@ class AddSupportActivity: BaseActivity<ActivityAddSupportBinding>(R.layout.activ
         clickFindAddress()
         clickStartTime()
         clickEntTime()
+        binding.supportBtn.setOnClickListener {
+            finish()
+        }
     }
 
     override fun observeEvent() {
