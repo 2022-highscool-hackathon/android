@@ -1,0 +1,44 @@
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.example.hackathon_2022.ui.signup.ceo.CeoFragment_4_info">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="일자리 정보를 입력해주세요!"
+            android:textColor="@color/black"
+            android:fontFamily="@font/pretendard_bold"
+            android:includeFontPadding="false"
+            android:layout_marginTop="130dp"
+            android:layout_marginStart="30dp"/>
+
+        <EditText
+            android:id="@+id/et_ceo_num"
+            style="@style/sign_edit_text"
+            android:layout_marginTop="100dp"
+            android:hint="사업자등록번호를 입력해주세요"/>
+
+        <EditText
+            android:id="@+id/et_ceo_store_num"
+            style="@style/sign_edit_text"
+            android:layout_marginTop="20dp"
+            android:hint="회사/점포명을 입력해주세요"/>
+
+        <EditText
+            android:id="@+id/et_ceo_address"
+            style="@style/sign_edit_text"
+            android:layout_marginTop="20dp"
+            android:hint="회사/점포 주소를 입력해주세요"/>
+
+        <Button
+            android:id="@+id/btn_ceo_info"
+            style="@style/sign_btn"
+            android:layout_marginTop="32dp"
+            android:text="다음" />
+    </LinearLayout>
+</layout>
