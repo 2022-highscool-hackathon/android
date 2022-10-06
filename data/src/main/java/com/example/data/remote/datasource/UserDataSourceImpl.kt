@@ -9,9 +9,8 @@ import javax.inject.Inject
 class UserDataSourceImpl @Inject constructor(
     private val userAPI: UserAPI
 ): UserDataSource, BaseDataSource() {
-    override suspend fun signUp(request: SignUpRequest): Void? {
-        return safeApiCall { userAPI.signUp(request = request) }?.body()
-    }
+    override suspend fun signUp(request: SignUpRequest): Int =
+       userAPI.signUp(request)
 
     override suspend fun login(request: LoginRequest): LoginResponse? {
         return safeApiCall { userAPI.login(request = request) }?.body()

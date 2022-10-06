@@ -12,7 +12,7 @@ import javax.inject.Inject
 class UserRepositoryImpl @Inject constructor(
     private val userDataSource: UserDataSource
 ): UserRepository {
-    override suspend fun signUp(request: SignUpParam): Void? {
+    override suspend fun signUp(request: SignUpParam): Int {
         return userDataSource.signUp(request = request.toRequest())
     }
 

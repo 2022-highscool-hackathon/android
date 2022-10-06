@@ -4,7 +4,7 @@ import com.example.data.remote.request.user.*
 import com.example.data.remote.response.user.*
 
 interface UserDataSource {
-    suspend fun signUp(request: SignUpRequest): Void?
+    suspend fun signUp(request: SignUpRequest): Int
     suspend fun login(request: LoginRequest): LoginResponse?
     suspend fun getInfo(key: String): InfoResponse?
     suspend fun dolbomi(request: DolbomiRequest): Void?

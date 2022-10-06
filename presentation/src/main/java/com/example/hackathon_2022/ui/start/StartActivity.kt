@@ -21,7 +21,7 @@ class StartActivity : BaseActivity<ActivityStartBinding>(R.layout.activity_start
             }
 
             btnStart1.setOnClickListener {
-                intent.putExtra("who","노인")
+                intent.putExtra("who","elder")
                 startActivity(intent)
             }
             btnStart1.setOnTouchListener(object : OnTouchListener{
@@ -40,7 +40,7 @@ class StartActivity : BaseActivity<ActivityStartBinding>(R.layout.activity_start
 
             })
             btnStart2.setOnClickListener {
-                intent.putExtra("who","돌보미")
+                intent.putExtra("who","caregiver")
                 startActivity(intent)
             }
             btnStart2.setOnTouchListener(object : OnTouchListener{
@@ -59,7 +59,7 @@ class StartActivity : BaseActivity<ActivityStartBinding>(R.layout.activity_start
 
             })
             binding.btnStart3.setOnClickListener {
-                intent.putExtra("who","사장님")
+                intent.putExtra("who","employee")
                 startActivity(intent)
             }
             btnStart3.setOnTouchListener(object : OnTouchListener{

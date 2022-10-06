@@ -15,6 +15,8 @@ import com.example.presentation.databinding.FragmentCeo3PasswordBinding
 
 class CeoFragment_3_password : BaseFragment<FragmentCeo3PasswordBinding>(R.layout.fragment_ceo_3_password){
     override fun initView() {
+
+        passwordCheck()
         val signUpActivity = (activity as SignUpActivity)
 
         binding.btnCeoPassword.setOnClickListener {

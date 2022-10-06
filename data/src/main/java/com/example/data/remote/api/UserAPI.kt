@@ -12,7 +12,7 @@ interface UserAPI {
     @POST("user/create")
     suspend fun signUp(
         @Body request: SignUpRequest
-    ): Response<Void>
+    ): Int
 
     @POST("user/login")
     suspend fun login(
