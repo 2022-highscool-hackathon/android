@@ -1,7 +1,6 @@
 package com.example.hackathon_2022.ui.signup.old
 
 import com.example.hackathon_2022.ui.base.BaseFragment
-import com.example.hackathon_2022.ui.main.MainActivity
 import com.example.hackathon_2022.ui.signup.SignUpActivity
 import com.example.presentation.R
 import com.example.presentation.databinding.FragmentOld1NameBinding
