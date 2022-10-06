@@ -5,7 +5,7 @@ import com.example.domain.entity.user.LoginEntity
 import com.example.domain.param.user.*
 
 interface UserRepository {
-    suspend fun signUp(request: SignUpParam): Void?
+    suspend fun signUp(request: SignUpParam): Int
     suspend fun login(request: LoginParam): LoginEntity?
     suspend fun getInfo(key: String): InfoEntity?
     suspend fun dolbomi(request: DolbomiParam): Void?

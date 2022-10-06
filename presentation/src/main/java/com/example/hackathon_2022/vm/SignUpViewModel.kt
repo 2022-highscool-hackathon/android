@@ -19,7 +19,9 @@ class SignUpViewModel @Inject constructor(
 
     fun userCrete(signUpParam: SignUpParam){
        viewModelScope.launch {
-           signUpUseCase.execute(signUpParam)
+           signUpUseCase.signUp(signUpParam).let { response->
+               userCreate.value = response
+           }
        }
     }
 }

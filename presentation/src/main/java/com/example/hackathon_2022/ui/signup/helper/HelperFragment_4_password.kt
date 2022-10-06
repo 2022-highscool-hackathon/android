@@ -1,5 +1,6 @@
 package com.example.hackathon_2022.ui.signup.helper
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,12 +9,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.hackathon_2022.ui.base.BaseFragment
+import com.example.hackathon_2022.ui.main.MainDolbomiActivity
 import com.example.presentation.R
 import com.example.presentation.databinding.FragmentHelper4PasswordBinding
 
 class HelperFragment_4_password : BaseFragment<FragmentHelper4PasswordBinding>(R.layout.fragment_helper_4_password) {
     override fun initView() {
+        passwordCheck()
 
+        binding.btnHelperPassword.setOnClickListener {
+            startActivity(Intent(requireContext(),MainDolbomiActivity::class.java))
+        }
     }
 
     override fun observeEvent() {}
