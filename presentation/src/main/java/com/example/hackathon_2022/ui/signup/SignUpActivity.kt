@@ -2,7 +2,7 @@ package com.example.hackathon_2022.ui.signup
 
 import androidx.fragment.app.Fragment
 import com.example.hackathon_2022.ui.base.BaseActivity
-import com.example.hackathon_2022.ui.base.BaseFragment
+import com.example.hackathon_2022.ui.signup.helper.HelperFragment_1_name
 import com.example.hackathon_2022.ui.signup.old.OldFragment_1_Name
 import com.example.presentation.R
 import com.example.presentation.databinding.ActivitySignUpBinding
@@ -16,7 +16,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
                 supportFragmentManager.beginTransaction().replace(R.id.frame_sign_up, OldFragment_1_Name()).commit()
             }
             "돌보미" -> {
-
+                supportFragmentManager.beginTransaction().replace(R.id.frame_sign_up, HelperFragment_1_name()).commit()
             }
             "사장님" -> {
 
