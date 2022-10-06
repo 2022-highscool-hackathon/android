@@ -19,7 +19,7 @@ class OldFragment_2_Sex : BaseFragment<FragmentOld2SexBinding>(R.layout.fragment
             btnOldMale.isChecked = true
 
             binding.btnOldSex.setOnClickListener {
-                signUpActivity.goFragment("2", OldFragment_3_OX())
+                signUpActivity.goFragment("2", OldFragment_3_Age())
             }
         }
     }

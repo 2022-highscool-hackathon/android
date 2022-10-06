@@ -5,19 +5,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="#F4F4F4"
         android:clickable="true"
-        tools:context="com.example.hackathon_2022.ui.signup.helper.HelperFragment_3_phone_number">
+        android:orientation="vertical"
+        tools:context="com.example.hackathon_2022.ui.signup.old.OldFragment_3_Age">
+
         <EditText
-            android:id="@+id/et_helper_phone_number"
-            android:hint="전화번호를 입력해주세요"
+            android:id="@+id/et_age_name"
+            android:hint="만 나이를 입력해주세요"
             style="@style/sign_edit_text" />
 
         <Button
-            android:id="@+id/btn_helper_phone_number"
+            android:id="@+id/btn_age_name"
             android:text="다음"
             style="@style/sign_btn"/>
-
     </LinearLayout>
 </layout>

@@ -17,7 +17,7 @@ class OldFragment_3_OX : BaseFragment<FragmentOld3OXBinding>(R.layout.fragment_o
         binding.btnOldO.isChecked = true
 
         binding.btnOldSex.setOnClickListener {
-            signUpActivity.goFragment("3",OldFragment_4_PhoneNumber())
+            signUpActivity.goFragment("3-2",OldFragment_4_PhoneNumber())
         }
     }
 

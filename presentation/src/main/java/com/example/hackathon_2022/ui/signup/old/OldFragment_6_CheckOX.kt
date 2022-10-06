@@ -8,15 +8,17 @@ import android.view.ViewGroup
 import com.example.hackathon_2022.ui.base.BaseFragment
 import com.example.hackathon_2022.ui.signup.SignUpActivity
 import com.example.presentation.R
-import com.example.presentation.databinding.FragmentOld4PhoneNumberBinding
+import com.example.presentation.databinding.FragmentOld6CheckOXBinding
+import com.example.presentation.databinding.FragmentOld6ResumeBinding
 
-class OldFragment_4_PhoneNumber : BaseFragment<FragmentOld4PhoneNumberBinding>(R.layout.fragment_old_4__phone_number) {
+class OldFragment_6_CheckOX : BaseFragment<FragmentOld6CheckOXBinding>(R.layout.fragment_old_6__check_o_x) {
     override fun initView() {
         val signUpActivity = (activity as SignUpActivity)
 
-        binding.btnOldPhoneNumber.setOnClickListener {
-            signUpActivity.goFragment("4",OldFragment_5_Password())
+        binding.btnOldSex.setOnClickListener {
+            signUpActivity.goFragment("6-1",OldFragment_6_Resume())
         }
+
     }
 
     override fun observeEvent() {}

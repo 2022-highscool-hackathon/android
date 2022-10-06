@@ -27,6 +27,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
             }
         }
 
+
         binding.btnSignUpBack.setOnClickListener {
             onBackPressed()
         }
@@ -34,12 +35,29 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
 
     override fun observeEvent() {}
 
+    companion object{
+        var list_what = ArrayList<String>()
+        var list_want = ArrayList<String>()
+    }
+
     fun goFragment(backStack: String, fragment: Fragment){
         supportFragmentManager.beginTransaction()
             .setCustomAnimations(R.anim.horizon_enter,R.anim.none,R.anim.none,R.anim.horizon_exit)
             .add(R.id.frame_sign_up,fragment,backStack)
             .addToBackStack(backStack)
             .commit()
+    }
+
+    fun goFragmentNoStack(fragment: Fragment){
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.horizon_enter,R.anim.none,R.anim.none,R.anim.horizon_exit)
+            .add(R.id.frame_sign_up,fragment)
+            .commit()
+    }
+
+
+    fun onBackPressedSign(){
+        onBackPressed()
     }
 
 }

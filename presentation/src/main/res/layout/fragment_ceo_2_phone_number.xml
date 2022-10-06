@@ -7,6 +7,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="#F4F4F4"
+        android:clickable="true"
         tools:context="com.example.hackathon_2022.ui.signup.ceo.CeoFragment_2_phone_number">
         <EditText
             android:id="@+id/et_ceo_phone_number"

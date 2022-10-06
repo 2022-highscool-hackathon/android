@@ -6,25 +6,35 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:gravity="center_horizontal"
         android:background="#F4F4F4"
         android:clickable="true"
-        tools:context="com.example.hackathon_2022.ui.signup.old.OldFragment_3_OX">
-
+        tools:context="com.example.hackathon_2022.ui.signup.old.OldFragment_6_CheckOX">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="돌보미가 필요한가요?"
+            android:text="이력서를 작성할까요?"
             android:textSize="18sp"
             android:textColor="@color/black"
             android:fontFamily="@font/pretendard_bold"
             android:includeFontPadding="false"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="248dp"/>
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이력서를 작성하면 빠른 일자리 지원이 가능합니다"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/pretendard_semibold"
+            android:includeFontPadding="false"
+            android:layout_marginTop="5dp"/>
 
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="54dp"
-            android:layout_marginTop="47dp"
+            android:layout_marginTop="17dp"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
             <RadioButton
@@ -47,6 +57,5 @@
             android:id="@+id/btn_old_sex"
             android:text="다음"
             style="@style/sign_btn"/>
-
     </LinearLayout>
 </layout>

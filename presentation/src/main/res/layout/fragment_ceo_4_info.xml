@@ -5,6 +5,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:clickable="true"
+        android:background="#F4F4F4"
         tools:context="com.example.hackathon_2022.ui.signup.ceo.CeoFragment_4_info">
 
         <TextView
