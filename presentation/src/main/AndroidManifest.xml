@@ -26,7 +26,9 @@
 
         <activity
             android:name="com.example.hackathon_2022.ui.signup.SignUpActivity"
-            android:exported="false">
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|adjustPan">
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

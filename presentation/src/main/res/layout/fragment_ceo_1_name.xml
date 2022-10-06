@@ -1,0 +1,23 @@
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#F4F4F4"
+        android:clickable="true"
+        tools:context="com.example.hackathon_2022.ui.signup.ceo.CeoFragment_1_name">
+
+        <EditText
+            android:id="@+id/et_ceo_name"
+            android:hint="이름을 입력해주세요"
+            style="@style/sign_edit_text" />
+
+        <Button
+            android:id="@+id/btn_ceo_name"
+            android:text="다음"
+            style="@style/sign_btn"/>
+    </LinearLayout>
+</layout>
