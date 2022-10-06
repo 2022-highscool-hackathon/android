@@ -17,8 +17,18 @@ class OldFragment_2_Sex : BaseFragment<FragmentOld2SexBinding>(R.layout.fragment
             val signUpActivity = (activity as SignUpActivity)
 
             btnOldMale.isChecked = true
+            var sex = "male"
 
+            binding.run {
+                btnOldMale.setOnClickListener {
+                    sex = "male"
+                }
+                btnOldFemale.setOnClickListener {
+                    sex = "female"
+                }
+            }
             binding.btnOldSex.setOnClickListener {
+                SignUpActivity.sex = sex
                 signUpActivity.goFragment("2", OldFragment_3_Age())
             }
         }

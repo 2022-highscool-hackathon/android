@@ -11,15 +11,16 @@ import com.example.presentation.databinding.ActivitySignUpBinding
 class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sign_up) {
     override fun initView() {
         val who = intent.getStringExtra("who") ?: ""
+        elder = who
 
         when (who) {
-            "노인" -> {
+            "elder" -> {
                 supportFragmentManager.beginTransaction().replace(R.id.frame_sign_up, OldFragment_1_Name()).commit()
             }
-            "돌보미" -> {
+            "caregiver" -> {
                 supportFragmentManager.beginTransaction().replace(R.id.frame_sign_up, HelperFragment_1_name()).commit()
             }
-            "사장님" -> {
+            "employee" -> {
                 supportFragmentManager.beginTransaction().replace(R.id.frame_sign_up, CeoFragment_1_name()).commit()
             }
             else -> {
@@ -38,6 +39,14 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
     companion object{
         var list_what = ArrayList<String>()
         var list_want = ArrayList<String>()
+        var phone = ""
+        var password = ""
+        var nickname = ""
+        var sex = ""
+        var role = ""
+        var elder = ""
+        var usercode = 0
+        var age = 0
     }
 
     fun goFragment(backStack: String, fragment: Fragment){

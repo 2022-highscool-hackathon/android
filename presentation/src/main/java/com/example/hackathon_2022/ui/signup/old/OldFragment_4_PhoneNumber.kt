@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.hackathon_2022.ui.base.BaseFragment
 import com.example.hackathon_2022.ui.signup.SignUpActivity
+import com.example.hackathon_2022.ui.signup.SignUpActivity.Companion.phone
 import com.example.presentation.R
 import com.example.presentation.databinding.FragmentOld4PhoneNumberBinding
 
@@ -15,6 +16,7 @@ class OldFragment_4_PhoneNumber : BaseFragment<FragmentOld4PhoneNumberBinding>(R
         val signUpActivity = (activity as SignUpActivity)
 
         binding.btnOldPhoneNumber.setOnClickListener {
+            phone = binding.etOldPhoneNumber.text.toString()
             signUpActivity.goFragment("4",OldFragment_5_Password())
         }
     }

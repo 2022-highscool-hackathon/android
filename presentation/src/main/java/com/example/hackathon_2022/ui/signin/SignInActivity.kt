@@ -9,6 +9,7 @@ import com.example.presentation.databinding.ActivitySignInBinding
 class SignInActivity : BaseActivity<ActivitySignInBinding>(R.layout.activity_sign_in) {
     override fun initView() {
 
+        //비밀 번호 8~30자 특수기호랑 영어만
     }
 
     override fun observeEvent() {}

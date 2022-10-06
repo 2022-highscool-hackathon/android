@@ -11,12 +11,12 @@
         tools:context="com.example.hackathon_2022.ui.signup.old.OldFragment_3_Age">
 
         <EditText
-            android:id="@+id/et_age_name"
+            android:id="@+id/et_old_age"
             android:hint="만 나이를 입력해주세요"
             style="@style/sign_edit_text" />
 
         <Button
-            android:id="@+id/btn_age_name"
+            android:id="@+id/btn_old_age"
             android:text="다음"
             style="@style/sign_btn"/>
     </LinearLayout>

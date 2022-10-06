@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import com.example.hackathon_2022.ui.base.BaseFragment
 import com.example.hackathon_2022.ui.signup.SignUpActivity
+import com.example.hackathon_2022.ui.signup.SignUpActivity.Companion.password
 import com.example.presentation.R
 import com.example.presentation.databinding.FragmentOld5PasswordBinding
 
@@ -21,8 +22,15 @@ class OldFragment_5_Password : BaseFragment<FragmentOld5PasswordBinding>(R.layou
 
         val signUpActivity = (activity as SignUpActivity)
 
-        binding.btnOldPassword.setOnClickListener {
-            signUpActivity.goFragment("5",OldFragment_3_OX())
+        binding.run {
+            btnOldPassword.setOnClickListener {
+                if(etOldPassword == etOldPasswordCheck){
+                    password = etOldPassword.text.toString()
+                    signUpActivity.goFragment("5",OldFragment_3_OX())
+
+
+                }
+           }
         }
     }
 

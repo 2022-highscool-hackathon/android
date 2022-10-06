@@ -65,9 +65,14 @@ dependencies {
     implementation(Dependency.Google.MATERIAL)
     implementation(Dependency.Google.HILT_ANDROID)
     implementation(Dependency.Google.GOOGLE_MAP)
-    implementation("androidx.appcompat:appcompat:1.5.1")
-    implementation("com.google.android.material:material:1.4.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2")
+
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0-alpha03")
+
+
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
     kapt(Dependency.Google.HILT_ANDROID_COMPILER)
 
     implementation(Dependency.Retrofit.RETROFIT)
