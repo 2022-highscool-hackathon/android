@@ -1,0 +1,91 @@
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F4F4F4"
+        android:clickable="true"
+        tools:context="com.example.hackathon_2022.ui.signup.old.OldFragment_3_OX_1_week">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="286dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:includeFontPadding="false"
+            android:text="돌보미가 필요한 요일을 알려주세요"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_monday"
+            style="@style/old_week_btn"
+            android:layout_marginEnd="8dp"
+            android:text="월"
+            app:layout_constraintEnd_toStartOf="@+id/btn_tuesday"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <Button
+            android:id="@+id/btn_tuesday"
+            style="@style/old_week_btn"
+            android:layout_marginEnd="8dp"
+            android:text="화"
+            app:layout_constraintEnd_toStartOf="@+id/btn_wednesday"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <Button
+            android:id="@+id/btn_wednesday"
+            style="@style/old_week_btn"
+            android:layout_marginEnd="8dp"
+            android:text="수"
+            app:layout_constraintEnd_toStartOf="@+id/btn_thursday"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <Button
+            android:id="@+id/btn_thursday"
+            style="@style/old_week_btn"
+            android:text="목"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <Button
+            android:id="@+id/btn_friday"
+            style="@style/old_week_btn"
+            android:layout_marginStart="8dp"
+            android:text="금"
+            app:layout_constraintStart_toEndOf="@+id/btn_thursday"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <Button
+            android:id="@+id/btn_saturday"
+            style="@style/old_week_btn"
+            android:layout_marginStart="8dp"
+            android:text="토"
+            app:layout_constraintStart_toEndOf="@+id/btn_friday"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <Button
+            android:id="@+id/btn_sunday"
+            style="@style/old_week_btn"
+            android:layout_marginStart="8dp"
+            android:text="일"
+            app:layout_constraintStart_toEndOf="@+id/btn_saturday"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <Button
+            android:id="@+id/btn_old_week"
+            style="@style/sign_btn"
+            android:text="다음"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_thursday" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

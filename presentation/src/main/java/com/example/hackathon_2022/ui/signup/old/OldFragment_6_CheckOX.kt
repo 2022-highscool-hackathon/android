@@ -15,10 +15,25 @@ class OldFragment_6_CheckOX : BaseFragment<FragmentOld6CheckOXBinding>(R.layout.
     override fun initView() {
         val signUpActivity = (activity as SignUpActivity)
 
-        binding.btnOldSex.setOnClickListener {
-            signUpActivity.goFragment("6-1",OldFragment_6_Resume())
-        }
+        var ox = true
 
+        binding.run {
+            btnOldO.isChecked = true
+
+            btnOldO.setOnClickListener {
+                ox = true
+            }
+            btnOldX.setOnClickListener {
+                ox = false
+            }
+            btnOldSex.setOnClickListener {
+                if(ox){
+                    signUpActivity.goFragment("6-1",OldFragment_6_Resume())
+                }else{
+
+                }
+            }
+        }
     }
 
     override fun observeEvent() {}

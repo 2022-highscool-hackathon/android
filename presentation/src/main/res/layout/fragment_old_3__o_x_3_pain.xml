@@ -1,0 +1,35 @@
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F4F4F4"
+        android:clickable="true"
+        android:orientation="vertical"
+        tools:context="com.example.hackathon_2022.ui.signup.old.OldFragment_3_OX_3_pain">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="돌보미에게 병력을 알려주세요!"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/pretendard_bold"
+            android:includeFontPadding="false"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="248dp"/>
+
+        <EditText
+            android:id="@+id/et_old_pain"
+            style="@style/sign_edit_text"
+            android:layout_marginTop="47dp"
+            android:hint="병력을 입력해주세요"/>
+
+        <Button
+            android:id="@+id/btn_old_pain"
+            android:text="다음"
+            style="@style/sign_btn"/>
+    </LinearLayout>
+</layout>

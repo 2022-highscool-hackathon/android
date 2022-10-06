@@ -1,0 +1,17 @@
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F4F4F4"
+        android:clickable="true"
+        tools:context="com.example.hackathon_2022.ui.signup.old.OldFragment_3_OX_2_time">
+
+        <Button
+            android:id="@+id/btn_old_time"
+            style="@style/sign_btn"
+            android:text="다음"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

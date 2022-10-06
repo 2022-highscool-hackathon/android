@@ -1,0 +1,46 @@
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F4F4F4"
+        android:clickable="true"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        tools:context="com.example.hackathon_2022.ui.signup.old.OldFragment_3_OX_4_etc">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="또 돌보미에게 알려줄 사항이 있나요?"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/pretendard_bold"
+            android:includeFontPadding="false"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="248dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="없으면 바로 다음을 눌러주세요!"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/pretendard_semibold"
+            android:includeFontPadding="false"
+            android:layout_marginTop="5dp"/>
+
+        <EditText
+            style="@style/sign_edit_text"
+            android:layout_marginTop="17dp"
+            android:hint="기타 사항을 입력해주세요"/>
+
+        <Button
+            android:id="@+id/btn_old_etc"
+            android:text="다음"
+            style="@style/sign_btn"/>
+
+    </LinearLayout>
+</layout>

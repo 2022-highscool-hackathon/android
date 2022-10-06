@@ -22,7 +22,7 @@ class OldFragment_5_Password : BaseFragment<FragmentOld5PasswordBinding>(R.layou
         val signUpActivity = (activity as SignUpActivity)
 
         binding.btnOldPassword.setOnClickListener {
-            signUpActivity.goFragment("5",OldFragment_6_CheckOX())
+            signUpActivity.goFragment("5",OldFragment_3_OX())
         }
     }
 

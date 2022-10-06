@@ -13,11 +13,23 @@ import com.example.presentation.databinding.FragmentOld3OXBinding
 class OldFragment_3_OX : BaseFragment<FragmentOld3OXBinding>(R.layout.fragment_old_3_o_x) {
     override fun initView() {
         val signUpActivity = (activity as SignUpActivity)
+        var ox = true
 
         binding.btnOldO.isChecked = true
 
+        binding.btnOldO.setOnClickListener {
+            ox = true
+        }
+        binding.btnOldX.setOnClickListener {
+            ox = false
+        }
+
         binding.btnOldSex.setOnClickListener {
-            signUpActivity.goFragment("3-2",OldFragment_4_PhoneNumber())
+            if(ox){
+                signUpActivity.goFragment("3-2",OldFragment_3_OX_1_week())
+            }else{
+                signUpActivity.goFragment("3-2",OldFragment_6_CheckOX())
+            }
         }
     }
 

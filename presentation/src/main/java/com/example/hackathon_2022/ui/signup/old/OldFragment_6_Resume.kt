@@ -15,6 +15,7 @@ class OldFragment_6_Resume : BaseFragment<FragmentOld6ResumeBinding>(R.layout.fr
         textSet()
 
         binding.btnOldResume.setOnClickListener {
+            
         }
         binding.btnOldWhat.setOnClickListener {
             signUpActivity.goFragment("6-2",OldFragment_7_what())
