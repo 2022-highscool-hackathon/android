@@ -1,0 +1,1155 @@
+Index: presentation/src/main/java/com/example/hackathon_2022/ui/add/AddSupportActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.hackathon_2022.ui.add\n\nimport android.app.Dialog\nimport android.net.http.SslError\nimport android.os.Message\nimport android.view.ViewGroup\nimport android.webkit.*\nimport com.example.hackathon_2022.ui.base.BaseActivity\nimport com.example.presentation.R\nimport com.example.presentation.databinding.ActivityAddSupportBinding\nimport kotlinx.coroutines.CoroutineScope\nimport kotlinx.coroutines.Dispatchers\nimport kotlinx.coroutines.launch\nimport kotlinx.coroutines.withContext\n\nclass AddSupportActivity: BaseActivity<ActivityAddSupportBinding>(R.layout.activity_add_support){\n    override fun initView() {\n        clickBack()\n        clickFindAddress()\n    }\n\n    override fun observeEvent() {\n    }\n\n    private fun clickBack() {\n        binding.back.setOnClickListener {\n            finish()\n        }\n    }\n\n    private fun clickFindAddress() {\n        binding.findAddress.setOnClickListener {\n            showAddress()\n        }\n    }\n\n    private fun showAddress() {\n        binding.webView.settings.apply {\n            javaScriptEnabled = true\n            javaScriptCanOpenWindowsAutomatically = true\n            setSupportMultipleWindows(true)\n        }\n        binding.webView.apply {\n            addJavascriptInterface(MyJavaScriptInterface(), \"Leaf\")\n            webViewClient = client\n            webChromeClient = chromeClient\n            loadUrl(\"http://43.201.36.11:3000/api/map/find\")\n        }\n    }\n\n    inner class MyJavaScriptInterface {\n        @JavascriptInterface\n        fun getAddress(zoneCode: String, roadAddress: String, buildingName: String) {\n            CoroutineScope(Dispatchers.Default).launch {\n                withContext(CoroutineScope(Dispatchers.Main).coroutineContext) {\n                    binding.addressNumber.text = zoneCode\n                    binding.address.text = \"$roadAddress $buildingName\"\n                }\n            }\n        }\n    }\n\n    private val client: WebViewClient = object : WebViewClient() {\n\n        override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {\n            return false\n        }\n\n        override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {\n            handler?.proceed()\n        }\n    }\n\n    private val chromeClient = object : WebChromeClient() {\n\n        override fun onCreateWindow(view: WebView?, isDialog: Boolean, isUserGesture: Boolean, resultMsg: Message?): Boolean {\n\n            val newWebView = WebView(this@AddSupportActivity)\n\n            newWebView.settings.javaScriptEnabled = true\n\n            val dialog = Dialog(this@AddSupportActivity)\n\n            dialog.setContentView(newWebView)\n\n            val params = dialog.window!!.attributes\n\n            params.width = ViewGroup.LayoutParams.MATCH_PARENT\n            params.height = ViewGroup.LayoutParams.MATCH_PARENT\n            dialog.window!!.attributes = params\n            dialog.show()\n\n            newWebView.webChromeClient = object : WebChromeClient() {\n                override fun onJsAlert(view: WebView, url: String, message: String, result: JsResult): Boolean {\n                    super.onJsAlert(view, url, message, result)\n                    return true\n                }\n\n                override fun onCloseWindow(window: WebView?) {\n                    dialog.dismiss()\n                }\n            }\n\n            (resultMsg!!.obj as WebView.WebViewTransport).webView = newWebView\n            resultMsg.sendToTarget()\n\n            return true\n        }\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/presentation/src/main/java/com/example/hackathon_2022/ui/add/AddSupportActivity.kt b/presentation/src/main/java/com/example/hackathon_2022/ui/add/AddSupportActivity.kt
+--- a/presentation/src/main/java/com/example/hackathon_2022/ui/add/AddSupportActivity.kt	(revision c266359251044d1a783551e81ce3bd0d0d092e6f)
++++ b/presentation/src/main/java/com/example/hackathon_2022/ui/add/AddSupportActivity.kt	(date 1665056799000)
+@@ -1,10 +1,13 @@
+ package com.example.hackathon_2022.ui.add
+ 
+ import android.app.Dialog
++import android.app.TimePickerDialog
+ import android.net.http.SslError
+ import android.os.Message
++import android.view.View
+ import android.view.ViewGroup
+ import android.webkit.*
++import android.widget.TextView
+ import com.example.hackathon_2022.ui.base.BaseActivity
+ import com.example.presentation.R
+ import com.example.presentation.databinding.ActivityAddSupportBinding
+@@ -13,15 +16,57 @@
+ import kotlinx.coroutines.launch
+ import kotlinx.coroutines.withContext
+ 
+-class AddSupportActivity: BaseActivity<ActivityAddSupportBinding>(R.layout.activity_add_support){
++class AddSupportActivity : BaseActivity<ActivityAddSupportBinding>(R.layout.activity_add_support) {
++
++    private val startListener =
++        TimePickerDialog.OnTimeSetListener { p0, p1, p2 -> binding.startTimeTxt.text = "$p1 : $p2" }
++
++    private val endListener =
++        TimePickerDialog.OnTimeSetListener { p0, p1, p2 -> binding.endTimeTxt.text = "$p1 : $p2" }
++
+     override fun initView() {
+         clickBack()
+         clickFindAddress()
++        clickStart()
++        clickEnd()
++    }
++
++    fun clickDay(view: View) {
++        val txt = view as TextView
++        if (!txt.isSelected) {
++            txt.setBackgroundResource(R.color.white)
++            txt.setTextColor(resources.getColor(R.color.black))
++            txt.isSelected = true
++        } else {
++            txt.setBackgroundResource(R.color.main)
++            txt.setTextColor(resources.getColor(R.color.white))
++            txt.isSelected = false
++        }
+     }
+ 
+     override fun observeEvent() {
+     }
+ 
++    private fun clickStart() {
++        binding.startTime.setOnClickListener {
++            val dialog =
++                TimePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar, startListener, 9, 0, true)
++            dialog.setTitle("시작 시간")
++            dialog.window?.setBackgroundDrawableResource(R.color.transparent)
++            dialog.show()
++        }
++    }
++
++    private fun clickEnd() {
++        binding.endTime.setOnClickListener {
++            val dialog =
++                TimePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar, endListener, 18, 0, true)
++            dialog.setTitle("종료 시간")
++            dialog.window?.setBackgroundDrawableResource(R.color.transparent)
++            dialog.show()
++        }
++    }
++
+     private fun clickBack() {
+         binding.back.setOnClickListener {
+             finish()
+@@ -62,18 +107,30 @@
+ 
+     private val client: WebViewClient = object : WebViewClient() {
+ 
+-        override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
++        override fun shouldOverrideUrlLoading(
++            view: WebView?,
++            request: WebResourceRequest?
++        ): Boolean {
+             return false
+         }
+ 
+-        override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
++        override fun onReceivedSslError(
++            view: WebView?,
++            handler: SslErrorHandler?,
++            error: SslError?
++        ) {
+             handler?.proceed()
+         }
+     }
+ 
+     private val chromeClient = object : WebChromeClient() {
+ 
+-        override fun onCreateWindow(view: WebView?, isDialog: Boolean, isUserGesture: Boolean, resultMsg: Message?): Boolean {
++        override fun onCreateWindow(
++            view: WebView?,
++            isDialog: Boolean,
++            isUserGesture: Boolean,
++            resultMsg: Message?
++        ): Boolean {
+ 
+             val newWebView = WebView(this@AddSupportActivity)
+ 
+@@ -91,7 +148,12 @@
+             dialog.show()
+ 
+             newWebView.webChromeClient = object : WebChromeClient() {
+-                override fun onJsAlert(view: WebView, url: String, message: String, result: JsResult): Boolean {
++                override fun onJsAlert(
++                    view: WebView,
++                    url: String,
++                    message: String,
++                    result: JsResult
++                ): Boolean {
+                     super.onJsAlert(view, url, message, result)
+                     return true
+                 }
+Index: presentation/src/main/res/values/styles.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n    <style name=\"start_btn_background\">\n        <item name=\"android:layout_width\">match_parent</item>\n        <item name=\"android:layout_height\">100dp</item>\n        <item name=\"android:background\">@drawable/start_btn_background</item>\n        <item name=\"android:layout_marginStart\">55dp</item>\n        <item name=\"android:layout_marginEnd\">55dp</item>\n        <item name=\"android:layout_marginTop\">30dp</item>\n        <item name=\"android:elevation\">10dp</item>\n    </style>\n    <style name=\"start_btn_text\">\n        <item name=\"android:layout_width\">wrap_content</item>\n        <item name=\"android:layout_height\">wrap_content</item>\n        <item name=\"android:textColor\">@color/black</item>\n        <item name=\"android:textSize\">15sp</item>\n        <item name=\"android:fontFamily\">@font/pretendard_semibold</item>\n        <item name=\"android:includeFontPadding\">false</item>\n    </style>\n    <style name=\"start_btn_iamge\">\n        <item name=\"android:layout_width\">40dp</item>\n        <item name=\"android:layout_height\">40dp</item>\n        <item name=\"android:layout_marginEnd\">22dp</item>\n    </style>\n\n    <style name=\"sign_edit_text\">\n        <item name=\"android:layout_width\">match_parent</item>\n        <item name=\"android:layout_height\">50dp</item>\n        <item name=\"android:background\">@color/white</item>\n        <item name=\"android:textColor\">@color/black</item>\n        <item name=\"android:textSize\">15sp</item>\n        <item name=\"android:fontFamily\">@font/pretendard_semibold</item>\n        <item name=\"android:includeFontPadding\">false</item>\n        <item name=\"android:elevation\">2dp</item>\n        <item name=\"android:paddingStart\">34dp</item>\n        <item name=\"android:layout_marginStart\">30dp</item>\n        <item name=\"android:layout_marginEnd\">30dp</item>\n        <item name=\"android:layout_marginTop\">315dp</item>\n    </style>\n    <style name=\"sign_btn\">\n        <item name=\"android:layout_width\">match_parent</item>\n        <item name=\"android:layout_height\">35dp</item>\n        <item name=\"android:background\">@drawable/sign_btn_background</item>\n        <item name=\"android:textColor\">@color/white</item>\n        <item name=\"android:textSize\">15sp</item>\n        <item name=\"android:fontFamily\">@font/pretendard_semibold</item>\n        <item name=\"android:includeFontPadding\">false</item>\n        <item name=\"android:layout_marginStart\">30dp</item>\n        <item name=\"android:layout_marginEnd\">30dp</item>\n        <item name=\"android:layout_marginTop\">30dp</item>\n    </style>\n\n    <style name=\"all_btn_back\">\n        <item name=\"android:layout_width\">24dp</item>\n        <item name=\"android:layout_height\">24dp</item>\n        <item name=\"android:background\">#00ff0000</item>\n        <item name=\"android:src\">@drawable/all_btn_back</item>\n        <item name=\"android:layout_marginTop\">13dp</item>\n        <item name=\"android:layout_marginStart\">13dp</item>\n    </style>\n\n    <style name=\"text_400_16\">\n        <item name=\"fontFamily\">@font/pretendard_regular</item>\n        <item name=\"fontWeight\">400</item>\n        <item name=\"android:textColor\">@color/black</item>\n    </style>\n\n    <style name=\"text_400_15\">\n        <item name=\"fontFamily\">@font/pretendard_regular</item>\n        <item name=\"fontWeight\">400</item>\n        <item name=\"android:textColor\">@color/black</item>\n    </style>\n\n    <style name=\"text_600_18\">\n        <item name=\"fontFamily\">@font/pretendard_semibold</item>\n        <item name=\"fontWeight\">600</item>\n        <item name=\"android:textSize\">18sp</item>\n    </style>\n\n    <style name=\"text_600_20\">\n        <item name=\"fontFamily\">@font/pretendard_semibold</item>\n        <item name=\"fontWeight\">600</item>\n        <item name=\"android:textSize\">20sp</item>\n    </style>\n\n    <style name=\"text_700_20\">\n        <item name=\"fontFamily\">@font/pretendard_semibold</item>\n        <item name=\"fontWeight\">700</item>\n        <item name=\"android:textSize\">20sp</item>\n        <item name=\"android:textColor\">@color/black</item>\n    </style>\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/presentation/src/main/res/values/styles.xml b/presentation/src/main/res/values/styles.xml
+--- a/presentation/src/main/res/values/styles.xml	(revision c266359251044d1a783551e81ce3bd0d0d092e6f)
++++ b/presentation/src/main/res/values/styles.xml	(date 1665053712000)
+@@ -59,6 +59,18 @@
+         <item name="android:layout_marginStart">13dp</item>
+     </style>
+ 
++    <style name="text_400_12">
++        <item name="fontFamily">@font/pretendard_regular</item>
++        <item name="fontWeight">400</item>
++        <item name="android:textSize">12sp</item>
++    </style>
++
++    <style name="text_400_13">
++        <item name="fontFamily">@font/pretendard_regular</item>
++        <item name="fontWeight">400</item>
++        <item name="android:textSize">12sp</item>
++    </style>
++
+     <style name="text_400_16">
+         <item name="fontFamily">@font/pretendard_regular</item>
+         <item name="fontWeight">400</item>
+@@ -71,6 +83,18 @@
+         <item name="android:textColor">@color/black</item>
+     </style>
+ 
++    <style name="text_600_13">
++        <item name="fontFamily">@font/pretendard_semibold</item>
++        <item name="fontWeight">600</item>
++        <item name="android:textSize">13sp</item>
++    </style>
++
++    <style name="text_600_15">
++        <item name="fontFamily">@font/pretendard_semibold</item>
++        <item name="fontWeight">600</item>
++        <item name="android:textSize">15sp</item>
++    </style>
++
+     <style name="text_600_18">
+         <item name="fontFamily">@font/pretendard_semibold</item>
+         <item name="fontWeight">600</item>
+@@ -82,6 +106,12 @@
+         <item name="fontWeight">600</item>
+         <item name="android:textSize">20sp</item>
+     </style>
++
++    <style name="text_600_23">
++        <item name="fontFamily">@font/pretendard_semibold</item>
++        <item name="fontWeight">600</item>
++        <item name="android:textSize">23sp</item>
++    </style>
+ 
+     <style name="text_700_20">
+         <item name="fontFamily">@font/pretendard_semibold</item>
+Index: presentation/src/main/res/layout/activity_add_support.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<layout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\">\n\n    <data>\n\n    </data>\n\n    <ScrollView\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"match_parent\"\n        android:background=\"#F8F8F8\">\n\n        <androidx.constraintlayout.widget.ConstraintLayout\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"match_parent\">\n\n            <WebView\n                android:id=\"@+id/webView\"\n                android:layout_width=\"match_parent\"\n                android:layout_height=\"match_parent\"\n                android:layout_centerHorizontal=\"true\"\n                android:layout_centerVertical=\"true\" />\n\n            <ImageButton\n                android:id=\"@+id/back\"\n                style=\"@style/all_btn_back\"\n                app:layout_constraintStart_toStartOf=\"parent\"\n                app:layout_constraintTop_toTopOf=\"parent\" />\n\n            <View\n                android:id=\"@+id/addImageBtn\"\n                android:layout_width=\"match_parent\"\n                android:layout_height=\"210dp\"\n                android:layout_marginTop=\"8dp\"\n                android:background=\"#D9D9D9\"\n                app:layout_constraintTop_toBottomOf=\"@id/back\" />\n\n            <LinearLayout\n                android:id=\"@+id/addressLayout\"\n                android:layout_width=\"match_parent\"\n                android:layout_height=\"wrap_content\"\n                android:layout_marginHorizontal=\"15dp\"\n                android:orientation=\"vertical\"\n                app:layout_constraintTop_toBottomOf=\"@id/addImageBtn\">\n\n                <TextView\n                    android:layout_width=\"wrap_content\"\n                    android:layout_height=\"wrap_content\"\n                    android:layout_marginStart=\"7dp\"\n                    android:text=\"주소\"\n                    android:textColor=\"@color/black\" />\n\n                <LinearLayout\n                    android:layout_width=\"wrap_content\"\n                    android:layout_height=\"30dp\"\n                    android:layout_marginTop=\"4dp\">\n\n                    <TextView\n                        android:id=\"@+id/addressNumber\"\n                        android:gravity=\"center_vertical\"\n                        android:layout_width=\"123dp\"\n                        android:layout_height=\"match_parent\"\n                        android:background=\"@color/white\" />\n\n                    <View\n                        android:layout_width=\"1dp\"\n                        android:layout_height=\"match_parent\"\n                        android:background=\"#33000000\" />\n\n                    <androidx.appcompat.widget.AppCompatButton\n                        android:id=\"@+id/findAddress\"\n                        android:layout_width=\"87dp\"\n                        android:layout_height=\"match_parent\"\n                        android:background=\"@color/white\"\n                        android:text=\"주소검색\" />\n                </LinearLayout>\n\n                <TextView\n                    android:id=\"@+id/address\"\n                    android:layout_width=\"match_parent\"\n                    android:layout_height=\"30dp\"\n                    android:gravity=\"center_vertical\"\n                    android:layout_marginTop=\"4dp\"\n                    android:background=\"@color/white\" />\n\n                <EditText\n                    android:layout_width=\"match_parent\"\n                    android:layout_height=\"33dp\"\n                    android:layout_marginTop=\"4dp\"\n                    android:background=\"@color/white\"\n                    android:hint=\"상세주소를 입력해주세요\"\n                    android:paddingLeft=\"18dp\"\n                    android:textSize=\"12sp\" />\n            </LinearLayout>\n\n            <LinearLayout\n                android:id=\"@+id/workContentLayout\"\n                android:layout_width=\"match_parent\"\n                android:layout_height=\"wrap_content\"\n                android:layout_marginHorizontal=\"15dp\"\n                android:layout_marginTop=\"15dp\"\n                android:orientation=\"vertical\"\n                app:layout_constraintTop_toBottomOf=\"@id/addressLayout\">\n\n                <TextView\n                    android:layout_width=\"wrap_content\"\n                    android:layout_height=\"wrap_content\"\n                    android:layout_marginStart=\"7dp\"\n                    android:text=\"업무 내용\" />\n\n                <TextView\n                    android:layout_width=\"match_parent\"\n                    android:layout_height=\"30dp\"\n                    android:layout_marginTop=\"4dp\"\n                    android:background=\"@color/white\"\n                    android:gravity=\"center_vertical\"\n                    android:paddingLeft=\"18dp\"\n                    android:text=\"업무 내용을 선택해주세요\"\n                    android:textSize=\"12sp\" />\n            </LinearLayout>\n\n            <LinearLayout\n                android:id=\"@+id/workShapeLayout\"\n                android:layout_width=\"match_parent\"\n                android:layout_height=\"wrap_content\"\n                android:layout_marginHorizontal=\"15dp\"\n                android:layout_marginTop=\"15dp\"\n                android:orientation=\"vertical\"\n                app:layout_constraintTop_toBottomOf=\"@id/workContentLayout\">\n\n                <TextView\n                    android:layout_width=\"wrap_content\"\n                    android:layout_height=\"wrap_content\"\n                    android:layout_marginStart=\"7dp\"\n                    android:text=\"업무 형태\" />\n\n                <TextView\n                    android:layout_width=\"match_parent\"\n                    android:layout_height=\"30dp\"\n                    android:layout_marginTop=\"4dp\"\n                    android:background=\"@color/white\"\n                    android:gravity=\"center_vertical\"\n                    android:paddingLeft=\"18dp\"\n                    android:text=\"업무 형태를 선택해주세요\"\n                    android:textSize=\"12sp\" />\n            </LinearLayout>\n\n            <LinearLayout\n                android:id=\"@+id/workTimeLayout\"\n                android:layout_width=\"match_parent\"\n                android:layout_height=\"wrap_content\"\n                android:layout_marginHorizontal=\"15dp\"\n                android:layout_marginTop=\"15dp\"\n                android:orientation=\"vertical\"\n                app:layout_constraintTop_toBottomOf=\"@id/workShapeLayout\">\n\n                <TextView\n                    android:layout_width=\"wrap_content\"\n                    android:layout_height=\"wrap_content\"\n                    android:layout_marginStart=\"7dp\"\n                    android:text=\"업무 시간\" />\n\n                <LinearLayout\n                    android:layout_width=\"match_parent\"\n                    android:layout_height=\"30dp\"\n                    android:layout_marginTop=\"4dp\"\n                    android:orientation=\"horizontal\">\n\n                    <androidx.constraintlayout.widget.ConstraintLayout\n                        android:layout_width=\"0dp\"\n                        android:layout_height=\"match_parent\"\n                        android:layout_weight=\"5\"\n                        android:background=\"@color/white\">\n\n                        <TextView\n                            android:layout_width=\"wrap_content\"\n                            android:layout_height=\"wrap_content\"\n                            android:layout_marginStart=\"18sp\"\n                            android:text=\"시작 시간\"\n                            app:layout_constraintBottom_toBottomOf=\"parent\"\n                            app:layout_constraintStart_toStartOf=\"parent\"\n                            app:layout_constraintTop_toTopOf=\"parent\" />\n                    </androidx.constraintlayout.widget.ConstraintLayout>\n\n                    <View\n                        android:layout_width=\"0dp\"\n                        android:layout_height=\"match_parent\"\n                        android:layout_weight=\"0.5\" />\n\n                    <androidx.constraintlayout.widget.ConstraintLayout\n                        android:layout_width=\"0dp\"\n                        android:layout_height=\"match_parent\"\n                        android:layout_weight=\"5\"\n                        android:background=\"@color/white\">\n\n                        <TextView\n                            android:layout_width=\"wrap_content\"\n                            android:layout_height=\"wrap_content\"\n                            android:layout_marginStart=\"18sp\"\n                            android:text=\"종료 시간\"\n                            app:layout_constraintBottom_toBottomOf=\"parent\"\n                            app:layout_constraintStart_toStartOf=\"parent\"\n                            app:layout_constraintTop_toTopOf=\"parent\" />\n                    </androidx.constraintlayout.widget.ConstraintLayout>\n                </LinearLayout>\n            </LinearLayout>\n\n            <LinearLayout\n                android:id=\"@+id/workDayLayout\"\n                android:layout_width=\"match_parent\"\n                android:layout_height=\"wrap_content\"\n                android:layout_marginHorizontal=\"15dp\"\n                android:layout_marginTop=\"15dp\"\n                android:orientation=\"vertical\"\n                app:layout_constraintTop_toBottomOf=\"@id/workTimeLayout\">\n\n                <TextView\n                    android:layout_width=\"wrap_content\"\n                    android:layout_height=\"wrap_content\"\n                    android:layout_marginStart=\"7dp\"\n                    android:text=\"업무 요일\" />\n\n                <LinearLayout\n                    android:layout_width=\"match_parent\"\n                    android:layout_height=\"30dp\"\n                    android:layout_marginTop=\"4dp\">\n\n                    <TextView\n                        android:layout_width=\"0dp\"\n                        android:layout_height=\"match_parent\"\n                        android:layout_weight=\"1\"\n                        android:background=\"@color/white\"\n                        android:gravity=\"center\"\n                        android:text=\"월\" />\n\n                    <View\n                        android:layout_width=\"0dp\"\n                        android:layout_height=\"match_parent\"\n                        android:layout_weight=\"0.5\" />\n\n                    <TextView\n                        android:layout_width=\"0dp\"\n                        android:layout_height=\"match_parent\"\n                        android:layout_weight=\"1\"\n                        android:background=\"@color/white\"\n                        android:gravity=\"center\"\n                        android:paddingHorizontal=\"8dp\"\n                        android:text=\"화\" />\n\n                    <View\n                        android:layout_width=\"0dp\"\n                        android:layout_height=\"match_parent\"\n                        android:layout_weight=\"0.5\" />\n\n                    <TextView\n                        android:layout_width=\"0dp\"\n                        android:layout_height=\"match_parent\"\n                        android:layout_weight=\"1\"\n                        android:background=\"@color/white\"\n                        android:gravity=\"center\"\n                        android:paddingHorizontal=\"8dp\"\n                        android:text=\"수\" />\n\n                    <View\n                        android:layout_width=\"0dp\"\n                        android:layout_height=\"match_parent\"\n                        android:layout_weight=\"0.5\" />\n\n                    <TextView\n                        android:layout_width=\"0dp\"\n                        android:layout_height=\"match_parent\"\n                        android:layout_weight=\"1\"\n                        android:background=\"@color/white\"\n                        android:gravity=\"center\"\n                        android:paddingHorizontal=\"8dp\"\n                        android:text=\"목\" />\n\n                    <View\n                        android:layout_width=\"0dp\"\n                        android:layout_height=\"match_parent\"\n                        android:layout_weight=\"0.5\" />\n\n                    <TextView\n                        android:layout_width=\"0dp\"\n                        android:layout_height=\"match_parent\"\n                        android:layout_weight=\"1\"\n                        android:background=\"@color/white\"\n                        android:gravity=\"center\"\n                        android:paddingHorizontal=\"8dp\"\n                        android:text=\"금\" />\n\n                    <View\n                        android:layout_width=\"0dp\"\n                        android:layout_height=\"match_parent\"\n                        android:layout_weight=\"0.5\" />\n\n                    <TextView\n                        android:layout_width=\"0dp\"\n                        android:layout_height=\"match_parent\"\n                        android:layout_weight=\"1\"\n                        android:background=\"@color/white\"\n                        android:gravity=\"center\"\n                        android:paddingHorizontal=\"8dp\"\n                        android:text=\"토\" />\n\n                    <View\n                        android:layout_width=\"0dp\"\n                        android:layout_height=\"match_parent\"\n                        android:layout_weight=\"0.5\" />\n\n                    <TextView\n                        android:layout_width=\"0dp\"\n                        android:layout_height=\"match_parent\"\n                        android:layout_weight=\"1\"\n                        android:background=\"@color/white\"\n                        android:gravity=\"center\"\n                        android:paddingHorizontal=\"8dp\"\n                        android:text=\"일\" />\n                </LinearLayout>\n            </LinearLayout>\n\n            <androidx.constraintlayout.widget.ConstraintLayout\n                android:id=\"@+id/moneyLayout\"\n                android:layout_width=\"match_parent\"\n                android:layout_height=\"wrap_content\"\n                android:layout_marginHorizontal=\"15dp\"\n                android:layout_marginTop=\"15dp\"\n                app:layout_constraintTop_toBottomOf=\"@id/workDayLayout\">\n\n                <TextView\n                    android:id=\"@+id/money\"\n                    android:layout_width=\"wrap_content\"\n                    android:layout_height=\"wrap_content\"\n                    android:layout_marginStart=\"7dp\"\n                    android:text=\"시급\"\n                    app:layout_constraintStart_toStartOf=\"parent\"\n                    app:layout_constraintTop_toTopOf=\"parent\" />\n\n                <View\n                    android:layout_width=\"160dp\"\n                    android:layout_height=\"30dp\"\n                    android:layout_marginTop=\"4dp\"\n                    android:background=\"@color/white\"\n                    app:layout_constraintStart_toStartOf=\"parent\"\n                    app:layout_constraintTop_toBottomOf=\"@id/money\" />\n            </androidx.constraintlayout.widget.ConstraintLayout>\n\n            <LinearLayout\n                android:id=\"@+id/etcLayout\"\n                android:layout_width=\"match_parent\"\n                android:layout_height=\"wrap_content\"\n                android:layout_marginHorizontal=\"15dp\"\n                android:layout_marginTop=\"15dp\"\n                android:orientation=\"vertical\"\n                app:layout_constraintTop_toBottomOf=\"@id/moneyLayout\">\n\n                <TextView\n                    android:layout_width=\"wrap_content\"\n                    android:layout_height=\"wrap_content\"\n                    android:layout_marginStart=\"7dp\"\n                    android:text=\"기타\" />\n\n                <EditText\n                    android:layout_width=\"match_parent\"\n                    android:layout_height=\"33dp\"\n                    android:layout_marginTop=\"4dp\"\n                    android:background=\"@color/white\"\n                    android:hint=\"기타 사항이 있다면 입력해주세요\"\n                    android:paddingLeft=\"18dp\"\n                    android:textSize=\"12sp\" />\n            </LinearLayout>\n\n            <androidx.appcompat.widget.AppCompatButton\n                android:layout_width=\"match_parent\"\n                android:layout_height=\"45dp\"\n                android:layout_marginHorizontal=\"15dp\"\n                android:layout_marginTop=\"84dp\"\n                android:layout_marginBottom=\"11dp\"\n                android:background=\"#9ADBFF\"\n                android:text=\"등록하기\"\n                android:textColor=\"@color/white\"\n                app:layout_constraintBottom_toBottomOf=\"parent\"\n                app:layout_constraintTop_toBottomOf=\"@id/etcLayout\" />\n        </androidx.constraintlayout.widget.ConstraintLayout>\n    </ScrollView>\n</layout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/presentation/src/main/res/layout/activity_add_support.xml b/presentation/src/main/res/layout/activity_add_support.xml
+--- a/presentation/src/main/res/layout/activity_add_support.xml	(revision c266359251044d1a783551e81ce3bd0d0d092e6f)
++++ b/presentation/src/main/res/layout/activity_add_support.xml	(date 1665056838000)
+@@ -3,7 +3,9 @@
+     xmlns:app="http://schemas.android.com/apk/res-auto">
+ 
+     <data>
+-
++        <variable
++            name="addSupport"
++            type="com.example.hackathon_2022.ui.add.AddSupportActivity" />
+     </data>
+ 
+     <ScrollView
+@@ -42,9 +44,11 @@
+                 android:layout_height="wrap_content"
+                 android:layout_marginHorizontal="15dp"
+                 android:orientation="vertical"
++                android:layout_marginTop="20dp"
+                 app:layout_constraintTop_toBottomOf="@id/addImageBtn">
+ 
+                 <TextView
++                    style="@style/text_400_13"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginStart="7dp"
+@@ -57,9 +61,11 @@
+                     android:layout_marginTop="4dp">
+ 
+                     <TextView
++                        style="@style/text_400_12"
+                         android:id="@+id/addressNumber"
+                         android:gravity="center_vertical"
+                         android:layout_width="123dp"
++                        android:paddingLeft="18dp"
+                         android:layout_height="match_parent"
+                         android:background="@color/white" />
+ 
+@@ -69,6 +75,8 @@
+                         android:background="#33000000" />
+ 
+                     <androidx.appcompat.widget.AppCompatButton
++                        style="@style/text_400_12"
++                        android:textColor="#80000000"
+                         android:id="@+id/findAddress"
+                         android:layout_width="87dp"
+                         android:layout_height="match_parent"
+@@ -77,7 +85,9 @@
+                 </LinearLayout>
+ 
+                 <TextView
++                    style="@style/text_400_12"
+                     android:id="@+id/address"
++                    android:paddingLeft="18dp"
+                     android:layout_width="match_parent"
+                     android:layout_height="30dp"
+                     android:gravity="center_vertical"
+@@ -85,6 +95,7 @@
+                     android:background="@color/white" />
+ 
+                 <EditText
++                    style="@style/text_400_12"
+                     android:layout_width="match_parent"
+                     android:layout_height="33dp"
+                     android:layout_marginTop="4dp"
+@@ -104,12 +115,15 @@
+                 app:layout_constraintTop_toBottomOf="@id/addressLayout">
+ 
+                 <TextView
++                    style="@style/text_400_13"
++                    android:textColor="@color/black"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginStart="7dp"
+                     android:text="업무 내용" />
+ 
+                 <TextView
++                    style="@style/text_400_12"
+                     android:layout_width="match_parent"
+                     android:layout_height="30dp"
+                     android:layout_marginTop="4dp"
+@@ -130,12 +144,15 @@
+                 app:layout_constraintTop_toBottomOf="@id/workContentLayout">
+ 
+                 <TextView
++                    style="@style/text_400_13"
++                    android:textColor="@color/black"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginStart="7dp"
+                     android:text="업무 형태" />
+ 
+                 <TextView
++                    style="@style/text_400_12"
+                     android:layout_width="match_parent"
+                     android:layout_height="30dp"
+                     android:layout_marginTop="4dp"
+@@ -156,6 +173,8 @@
+                 app:layout_constraintTop_toBottomOf="@id/workShapeLayout">
+ 
+                 <TextView
++                    style="@style/text_400_13"
++                    android:textColor="@color/black"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginStart="7dp"
+@@ -168,12 +187,23 @@
+                     android:orientation="horizontal">
+ 
+                     <androidx.constraintlayout.widget.ConstraintLayout
++                        android:id="@+id/startTime"
+                         android:layout_width="0dp"
+                         android:layout_height="match_parent"
+                         android:layout_weight="5"
+                         android:background="@color/white">
++                        
++                        <ImageView
++                            android:layout_width="wrap_content"
++                            android:layout_height="wrap_content"
++                            android:background="@drawable/ic_down"
++                            app:layout_constraintEnd_toEndOf="parent"
++                            app:layout_constraintTop_toTopOf="parent"
++                            android:layout_marginEnd="9dp"
++                            app:layout_constraintBottom_toBottomOf="parent"/>
+ 
+                         <TextView
++                            android:id="@+id/startTimeTxt"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_marginStart="18sp"
+@@ -189,12 +219,23 @@
+                         android:layout_weight="0.5" />
+ 
+                     <androidx.constraintlayout.widget.ConstraintLayout
++                        android:id="@+id/endTime"
+                         android:layout_width="0dp"
+                         android:layout_height="match_parent"
+                         android:layout_weight="5"
+                         android:background="@color/white">
+ 
++                        <ImageView
++                            android:layout_width="wrap_content"
++                            android:layout_height="wrap_content"
++                            android:background="@drawable/ic_down"
++                            app:layout_constraintEnd_toEndOf="parent"
++                            app:layout_constraintTop_toTopOf="parent"
++                            android:layout_marginEnd="9dp"
++                            app:layout_constraintBottom_toBottomOf="parent"/>
++
+                         <TextView
++                            android:id="@+id/endTimeTxt"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_marginStart="18sp"
+@@ -216,6 +257,8 @@
+                 app:layout_constraintTop_toBottomOf="@id/workTimeLayout">
+ 
+                 <TextView
++                    style="@style/text_400_13"
++                    android:textColor="@color/black"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginStart="7dp"
+@@ -227,6 +270,10 @@
+                     android:layout_marginTop="4dp">
+ 
+                     <TextView
++                        android:id="@+id/monTxt"
++                        style="@style/text_400_13"
++                        android:onClick="clickDay"
++                        android:textColor="@color/black"
+                         android:layout_width="0dp"
+                         android:layout_height="match_parent"
+                         android:layout_weight="1"
+@@ -240,7 +287,11 @@
+                         android:layout_weight="0.5" />
+ 
+                     <TextView
++                        android:id="@+id/tueTxt"
++                        style="@style/text_400_13"
++                        android:textColor="@color/black"
+                         android:layout_width="0dp"
++                        android:onClick="clickDay"
+                         android:layout_height="match_parent"
+                         android:layout_weight="1"
+                         android:background="@color/white"
+@@ -254,7 +305,11 @@
+                         android:layout_weight="0.5" />
+ 
+                     <TextView
++                        android:id="@+id/wedTxt"
++                        style="@style/text_400_13"
++                        android:textColor="@color/black"
+                         android:layout_width="0dp"
++                        android:onClick="clickDay"
+                         android:layout_height="match_parent"
+                         android:layout_weight="1"
+                         android:background="@color/white"
+@@ -268,7 +323,11 @@
+                         android:layout_weight="0.5" />
+ 
+                     <TextView
++                        android:id="@+id/thuTxt"
++                        style="@style/text_400_13"
++                        android:textColor="@color/black"
+                         android:layout_width="0dp"
++                        android:onClick="clickDay"
+                         android:layout_height="match_parent"
+                         android:layout_weight="1"
+                         android:background="@color/white"
+@@ -282,8 +341,12 @@
+                         android:layout_weight="0.5" />
+ 
+                     <TextView
++                        android:id="@+id/friTxt"
++                        style="@style/text_400_13"
++                        android:textColor="@color/black"
+                         android:layout_width="0dp"
+                         android:layout_height="match_parent"
++                        android:onClick="clickDay"
+                         android:layout_weight="1"
+                         android:background="@color/white"
+                         android:gravity="center"
+@@ -296,7 +359,11 @@
+                         android:layout_weight="0.5" />
+ 
+                     <TextView
++                        android:id="@+id/satTxt"
++                        style="@style/text_400_13"
++                        android:textColor="@color/black"
+                         android:layout_width="0dp"
++                        android:onClick="clickDay"
+                         android:layout_height="match_parent"
+                         android:layout_weight="1"
+                         android:background="@color/white"
+@@ -310,8 +377,12 @@
+                         android:layout_weight="0.5" />
+ 
+                     <TextView
++                        android:id="@+id/sunTxt"
++                        style="@style/text_400_13"
++                        android:textColor="@color/black"
+                         android:layout_width="0dp"
+                         android:layout_height="match_parent"
++                        android:onClick="clickDay"
+                         android:layout_weight="1"
+                         android:background="@color/white"
+                         android:gravity="center"
+@@ -329,6 +400,8 @@
+                 app:layout_constraintTop_toBottomOf="@id/workDayLayout">
+ 
+                 <TextView
++                    style="@style/text_400_13"
++                    android:textColor="@color/black"
+                     android:id="@+id/money"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+@@ -356,12 +429,15 @@
+                 app:layout_constraintTop_toBottomOf="@id/moneyLayout">
+ 
+                 <TextView
++                    style="@style/text_400_13"
++                    android:textColor="@color/black"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginStart="7dp"
+                     android:text="기타" />
+ 
+                 <EditText
++                    style="@style/text_400_12"
+                     android:layout_width="match_parent"
+                     android:layout_height="33dp"
+                     android:layout_marginTop="4dp"
+@@ -372,12 +448,13 @@
+             </LinearLayout>
+ 
+             <androidx.appcompat.widget.AppCompatButton
++                style="@style/text_600_15"
+                 android:layout_width="match_parent"
+                 android:layout_height="45dp"
+                 android:layout_marginHorizontal="15dp"
+                 android:layout_marginTop="84dp"
+                 android:layout_marginBottom="11dp"
+-                android:background="#9ADBFF"
++                android:background="@drawable/bg_btn"
+                 android:text="등록하기"
+                 android:textColor="@color/white"
+                 app:layout_constraintBottom_toBottomOf="parent"
+Index: presentation/src/main/res/layout/fragment_info.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<layout xmlns:android=\"http://schemas.android.com/apk/res/android\">\n\n    <data>\n        <variable\n            name=\"info\"\n            type=\"com.example.hackathon_2022.ui.info.InfoFragment\" />\n    </data>\n\n    <androidx.constraintlayout.widget.ConstraintLayout\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"match_parent\">\n\n    </androidx.constraintlayout.widget.ConstraintLayout>\n</layout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/presentation/src/main/res/layout/fragment_info.xml b/presentation/src/main/res/layout/fragment_info.xml
+--- a/presentation/src/main/res/layout/fragment_info.xml	(revision c266359251044d1a783551e81ce3bd0d0d092e6f)
++++ b/presentation/src/main/res/layout/fragment_info.xml	(date 1665053310714)
+@@ -1,5 +1,7 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<layout xmlns:android="http://schemas.android.com/apk/res/android">
++<layout xmlns:tools="http://schemas.android.com/tools"
++    xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto">
+ 
+     <data>
+         <variable
+@@ -10,6 +12,179 @@
+     <androidx.constraintlayout.widget.ConstraintLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
++        
++        <View
++            android:id="@+id/profileLayout"
++            android:layout_width="match_parent"
++            android:layout_height="380dp"
++            app:layout_constraintTop_toTopOf="parent"
++            android:layout_marginTop="41dp"
++            android:layout_marginHorizontal="15dp"
++            android:background="@color/white"/>
++
++        <TextView
++            android:id="@+id/info"
++            style="@style/text_600_23"
++            android:textColor="#9ADBFF"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="내 정보"
++            app:layout_constraintStart_toStartOf="@id/profileLayout"
++            app:layout_constraintTop_toTopOf="@id/profileLayout"
++            android:layout_marginTop="12dp"
++            android:layout_marginStart="20dp"/>
++
++        <TextView
++            android:id="@+id/nameTxt"
++            style="@style/text_600_20"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="이름 : ㅇㅇㅇ"
++            app:layout_constraintStart_toStartOf="@id/profileLayout"
++            app:layout_constraintTop_toBottomOf="@id/info"
++            android:layout_marginTop="16dp"
++            android:layout_marginStart="20dp"/>
++
++        <TextView
++            android:id="@+id/ageTxt"
++            style="@style/text_600_20"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="나이 : 만ㅇㅇ세"
++            app:layout_constraintStart_toStartOf="@id/profileLayout"
++            app:layout_constraintTop_toBottomOf="@id/nameTxt"
++            android:layout_marginTop="10dp"
++            android:layout_marginStart="20dp"/>
++
++        <TextView
++            android:id="@+id/address"
++            style="@style/text_600_20"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="주소 :"
++            app:layout_constraintStart_toStartOf="@id/profileLayout"
++            app:layout_constraintTop_toTopOf="@id/addressTxt"
++            app:layout_constraintBottom_toBottomOf="@id/addressTxt"
++            android:layout_marginStart="20dp"/>
++
++        <TextView
++            android:id="@+id/addressTxt"
++            style="@style/text_600_20"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="대구 ㅇㅇ구 ㅇㅇ로 ㅇㅇ아파트\n00동 00호"
++            app:layout_constraintStart_toEndOf="@id/address"
++            app:layout_constraintTop_toBottomOf="@id/ageTxt"
++            android:layout_marginTop="44dp"
++            android:layout_marginStart="5dp"/>
++
++        <TextView
++            android:id="@+id/seekTxt"
++            style="@style/text_600_20"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="병력 : 당뇨, 치매"
++            app:layout_constraintStart_toStartOf="@id/profileLayout"
++            app:layout_constraintTop_toBottomOf="@id/addressTxt"
++            android:layout_marginTop="16dp"
++            android:layout_marginStart="20dp"/>
++
++        <TextView
++            android:id="@+id/etcTxt"
++            style="@style/text_600_20"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="기타 : ㅇㅇ"
++            app:layout_constraintStart_toStartOf="@id/profileLayout"
++            app:layout_constraintTop_toBottomOf="@id/seekTxt"
++            android:layout_marginTop="10dp"
++            android:layout_marginStart="20dp"/>
++
++        <androidx.appcompat.widget.AppCompatButton
++            android:id="@+id/editBtn"
++            style="@style/text_600_20"
++            android:textColor="@color/white"
++            android:layout_width="160dp"
++            android:layout_height="45dp"
++            android:text="정보 수정하기"
++            android:background="@drawable/bg_btn"
++            app:layout_constraintStart_toStartOf="@id/profileLayout"
++            app:layout_constraintEnd_toEndOf="@id/profileLayout"
++            app:layout_constraintBottom_toBottomOf="@id/profileLayout"
++            android:layout_marginStart="15dp"
++            android:layout_marginBottom="12dp"/>
++
++        <ImageView
++            android:layout_width="60dp"
++            android:layout_height="60dp"
++            app:layout_constraintEnd_toEndOf="@id/profileLayout"
++            app:layout_constraintTop_toTopOf="@id/profileLayout"
++            android:layout_marginTop="12dp"
++            android:layout_marginEnd="21dp"/>
++
++        <View
++            android:id="@+id/dolbomiLayout"
++            android:layout_width="match_parent"
++            android:layout_height="210dp"
++            android:layout_marginHorizontal="18dp"
++            android:layout_marginTop="16dp"
++            android:background="@color/white"
++            app:layout_constraintTop_toBottomOf="@id/profileLayout"
++            tools:layout_editor_absoluteX="15dp" />
++
++        <TextView
++            android:id="@+id/dolbomiInfo"
++            style="@style/text_600_23"
++            android:textColor="#9ADBFF"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="내 돌보미 정보"
++            app:layout_constraintStart_toStartOf="@id/dolbomiLayout"
++            app:layout_constraintTop_toTopOf="@id/dolbomiLayout"
++            android:layout_marginTop="12dp"
++            android:layout_marginStart="20dp"/>
++
++        <TextView
++            android:id="@+id/dolbomiNameTxt"
++            style="@style/text_600_20"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="이름 : ㅇㅇㅇ"
++            app:layout_constraintStart_toStartOf="@id/dolbomiLayout"
++            app:layout_constraintTop_toBottomOf="@id/dolbomiInfo"
++            android:layout_marginTop="16dp"
++            android:layout_marginStart="20dp"/>\
++
++        <TextView
++            android:id="@+id/dolbomiTelTxt"
++            style="@style/text_600_20"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="전화번호 : 010-0000-0000"
++            app:layout_constraintStart_toStartOf="@id/dolbomiLayout"
++            app:layout_constraintTop_toBottomOf="@id/dolbomiNameTxt"
++            android:layout_marginTop="10dp"
++            android:layout_marginStart="20dp"/>
++        
++        <Button
++            android:layout_width="160dp"
++            android:layout_height="45dp"
++            android:background="@drawable/bg_btn"
++            android:text="전화걸기"
++            style="@style/text_600_20"
++            android:textColor="@color/white"
++            app:layout_constraintStart_toStartOf="@id/dolbomiLayout"
++            app:layout_constraintEnd_toEndOf="@id/dolbomiLayout"
++            app:layout_constraintBottom_toBottomOf="@id/dolbomiLayout"
++            android:layout_marginBottom="17dp"/>
++
++        <ImageView
++            android:layout_width="60dp"
++            android:layout_height="60dp"
++            app:layout_constraintEnd_toEndOf="@id/dolbomiLayout"
++            app:layout_constraintTop_toTopOf="@id/dolbomiLayout"
++            android:layout_marginEnd="21dp"
++            android:layout_marginTop="12dp"/>
+ 
+     </androidx.constraintlayout.widget.ConstraintLayout>
+ </layout>
+\ No newline at end of file
+Index: presentation/src/main/res/layout/activity_main_dolbomi.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<layout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\">\n\n    <data>\n        <variable\n            name=\"mainDolbomi\"\n            type=\"com.example.hackathon_2022.ui.main.MainDolbomiActivity\" />\n    </data>\n\n    <androidx.constraintlayout.widget.ConstraintLayout\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"match_parent\">\n\n        <androidx.fragment.app.FragmentContainerView\n            android:id=\"@+id/mainFragmentContainer\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"0dp\"\n            app:layout_constraintTop_toTopOf=\"parent\"\n            app:layout_constraintBottom_toTopOf=\"@id/bottomNavigation\"/>\n\n        <LinearLayout\n            android:id=\"@+id/bottomNavigation\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"60dp\"\n            app:layout_constraintBottom_toBottomOf=\"parent\"\n            android:orientation=\"horizontal\"\n            android:background=\"@color/white\">\n            <androidx.appcompat.widget.AppCompatButton\n                android:id=\"@+id/dolbomiBtn\"\n                style=\"@style/text_600_18\"\n                android:layout_width=\"0dp\"\n                android:layout_height=\"match_parent\"\n                android:layout_marginVertical=\"10dp\"\n                android:layout_marginHorizontal=\"15dp\"\n                android:layout_weight=\"5\"\n                android:text=\"돌보미\"\n                android:textColor=\"@color/white\"\n                android:background=\"@drawable/bg_tab_selected\"/>\n            <View\n                android:layout_width=\"3dp\"\n                android:layout_height=\"match_parent\"\n                android:background=\"@drawable/bg_divide\"\n                android:layout_marginVertical=\"10dp\"/>\n            <androidx.appcompat.widget.AppCompatButton\n                android:id=\"@+id/infoBtn\"\n                style=\"@style/text_600_18\"\n                android:layout_width=\"0dp\"\n                android:layout_height=\"match_parent\"\n                android:layout_marginVertical=\"10dp\"\n                android:layout_marginHorizontal=\"15dp\"\n                android:layout_weight=\"5\"\n                android:text=\"내 정보\"\n                android:background=\"@null\"/>\n        </LinearLayout>\n\n    </androidx.constraintlayout.widget.ConstraintLayout>\n</layout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/presentation/src/main/res/layout/activity_main_dolbomi.xml b/presentation/src/main/res/layout/activity_main_dolbomi.xml
+--- a/presentation/src/main/res/layout/activity_main_dolbomi.xml	(revision c266359251044d1a783551e81ce3bd0d0d092e6f)
++++ b/presentation/src/main/res/layout/activity_main_dolbomi.xml	(date 1665054459000)
+@@ -22,13 +22,13 @@
+         <LinearLayout
+             android:id="@+id/bottomNavigation"
+             android:layout_width="match_parent"
+-            android:layout_height="60dp"
++            android:layout_height="55dp"
+             app:layout_constraintBottom_toBottomOf="parent"
+             android:orientation="horizontal"
+             android:background="@color/white">
+             <androidx.appcompat.widget.AppCompatButton
+                 android:id="@+id/dolbomiBtn"
+-                style="@style/text_600_18"
++                style="@style/text_600_15"
+                 android:layout_width="0dp"
+                 android:layout_height="match_parent"
+                 android:layout_marginVertical="10dp"
+@@ -44,7 +44,7 @@
+                 android:layout_marginVertical="10dp"/>
+             <androidx.appcompat.widget.AppCompatButton
+                 android:id="@+id/infoBtn"
+-                style="@style/text_600_18"
++                style="@style/text_600_15"
+                 android:layout_width="0dp"
+                 android:layout_height="match_parent"
+                 android:layout_marginVertical="10dp"
+Index: presentation/src/main/java/com/example/hackathon_2022/ui/main/MainDolbomiActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.hackathon_2022.ui.main\n\nimport android.widget.Button\nimport com.example.hackathon_2022.ui.base.BaseActivity\nimport com.example.hackathon_2022.ui.dolbomi.DolbomiDolbomiFragment\nimport com.example.hackathon_2022.ui.info.InfoDolbomiFragment\nimport com.example.hackathon_2022.utils.navItemClick\nimport com.example.presentation.R\nimport com.example.presentation.databinding.ActivityMainDolbomiBinding\n\nclass MainDolbomiActivity: BaseActivity<ActivityMainDolbomiBinding>(R.layout.activity_main_dolbomi) {\n    override fun initView() {\n        initBottomNav()\n    }\n\n    override fun observeEvent() {\n    }\n\n    private fun initBottomNav() {\n        supportFragmentManager.beginTransaction().replace(R.id.mainFragmentContainer, DolbomiDolbomiFragment()).commit()\n        binding.dolbomiBtn.setOnClickListener {\n            navItemClick(it as Button, listOf(binding.infoBtn), isBottom = true) {\n                supportFragmentManager.beginTransaction().replace(R.id.mainFragmentContainer, InfoDolbomiFragment()).commit()\n            }\n        }\n        binding.infoBtn.setOnClickListener {\n            navItemClick(it as Button, listOf(binding.dolbomiBtn), isBottom = true) {\n                supportFragmentManager.beginTransaction().replace(R.id.mainFragmentContainer, DolbomiDolbomiFragment()).commit()\n            }\n        }\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/presentation/src/main/java/com/example/hackathon_2022/ui/main/MainDolbomiActivity.kt b/presentation/src/main/java/com/example/hackathon_2022/ui/main/MainDolbomiActivity.kt
+--- a/presentation/src/main/java/com/example/hackathon_2022/ui/main/MainDolbomiActivity.kt	(revision c266359251044d1a783551e81ce3bd0d0d092e6f)
++++ b/presentation/src/main/java/com/example/hackathon_2022/ui/main/MainDolbomiActivity.kt	(date 1665054500000)
+@@ -20,12 +20,12 @@
+         supportFragmentManager.beginTransaction().replace(R.id.mainFragmentContainer, DolbomiDolbomiFragment()).commit()
+         binding.dolbomiBtn.setOnClickListener {
+             navItemClick(it as Button, listOf(binding.infoBtn), isBottom = true) {
+-                supportFragmentManager.beginTransaction().replace(R.id.mainFragmentContainer, InfoDolbomiFragment()).commit()
++                supportFragmentManager.beginTransaction().replace(R.id.mainFragmentContainer, DolbomiDolbomiFragment()).commit()
+             }
+         }
+         binding.infoBtn.setOnClickListener {
+             navItemClick(it as Button, listOf(binding.dolbomiBtn), isBottom = true) {
+-                supportFragmentManager.beginTransaction().replace(R.id.mainFragmentContainer, DolbomiDolbomiFragment()).commit()
++                supportFragmentManager.beginTransaction().replace(R.id.mainFragmentContainer, InfoDolbomiFragment()).commit()
+             }
+         }
+     }
+Index: presentation/src/main/res/drawable/ic_down.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/presentation/src/main/res/drawable/ic_down.xml b/presentation/src/main/res/drawable/ic_down.xml
+new file mode 100644
+--- /dev/null	(date 1665055671566)
++++ b/presentation/src/main/res/drawable/ic_down.xml	(date 1665055671566)
+@@ -0,0 +1,10 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="14dp"
++    android:height="8dp"
++    android:viewportWidth="14"
++    android:viewportHeight="8">
++  <path
++      android:pathData="M0.636,1.349L7,7.712L13.364,1.349L12.303,0.287L7,5.591L1.697,0.287L0.636,1.349Z"
++      android:fillColor="#000000"
++      android:fillAlpha="0.5"/>
++</vector>
+Index: presentation/src/main/res/layout/fragment_job_owner.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<layout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\">\n\n    <data>\n\n    </data>\n\n    <androidx.constraintlayout.widget.ConstraintLayout\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"match_parent\">\n\n        <LinearLayout\n            android:id=\"@+id/topMenu\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"45dp\"\n            android:orientation=\"horizontal\"\n            app:layout_constraintTop_toTopOf=\"parent\"\n            android:layout_marginTop=\"40dp\"\n            android:layout_marginHorizontal=\"12dp\">\n            <androidx.appcompat.widget.AppCompatButton\n                android:id=\"@+id/allBtn\"\n                style=\"@style/text_600_18\"\n                android:layout_width=\"0dp\"\n                android:text=\"전체보기\"\n                android:textColor=\"@color/white\"\n                android:background=\"@drawable/bg_tab_selected\"\n                android:layout_height=\"match_parent\"\n                android:layout_weight=\"5\"\n                android:layout_marginHorizontal=\"3dp\"/>\n            <androidx.appcompat.widget.AppCompatButton\n                android:id=\"@+id/mapBtn\"\n                style=\"@style/text_600_18\"\n                android:text=\"지도보기\"\n                android:layout_width=\"0dp\"\n                android:layout_height=\"match_parent\"\n                android:background=\"@drawable/bg_tab_unselected_white\"\n                android:layout_weight=\"5\"\n                android:layout_marginHorizontal=\"3dp\"/>\n        </LinearLayout>\n        <androidx.fragment.app.FragmentContainerView\n            android:id=\"@+id/jobFragmentContainer\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"0dp\"\n            app:layout_constraintTop_toBottomOf=\"@id/topMenu\"\n            app:layout_constraintBottom_toBottomOf=\"parent\"\n            android:layout_marginTop=\"15dp\"/>\n\n    </androidx.constraintlayout.widget.ConstraintLayout>\n</layout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/presentation/src/main/res/layout/fragment_job_owner.xml b/presentation/src/main/res/layout/fragment_job_owner.xml
+--- a/presentation/src/main/res/layout/fragment_job_owner.xml	(revision c266359251044d1a783551e81ce3bd0d0d092e6f)
++++ b/presentation/src/main/res/layout/fragment_job_owner.xml	(date 1665054303000)
+@@ -13,14 +13,14 @@
+         <LinearLayout
+             android:id="@+id/topMenu"
+             android:layout_width="match_parent"
+-            android:layout_height="45dp"
++            android:layout_height="35dp"
+             android:orientation="horizontal"
+             app:layout_constraintTop_toTopOf="parent"
+             android:layout_marginTop="40dp"
+             android:layout_marginHorizontal="12dp">
+             <androidx.appcompat.widget.AppCompatButton
+                 android:id="@+id/allBtn"
+-                style="@style/text_600_18"
++                style="@style/text_600_15"
+                 android:layout_width="0dp"
+                 android:text="전체보기"
+                 android:textColor="@color/white"
+@@ -30,7 +30,7 @@
+                 android:layout_marginHorizontal="3dp"/>
+             <androidx.appcompat.widget.AppCompatButton
+                 android:id="@+id/mapBtn"
+-                style="@style/text_600_18"
++                style="@style/text_600_15"
+                 android:text="지도보기"
+                 android:layout_width="0dp"
+                 android:layout_height="match_parent"
+Index: presentation/src/main/res/layout/fragment_info_dolbomi.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<layout xmlns:android=\"http://schemas.android.com/apk/res/android\">\n\n    <data>\n        <variable\n            name=\"info_dolbomi\"\n            type=\"com.example.hackathon_2022.ui.info.InfoDolbomiFragment\" />\n    </data>\n\n    <androidx.constraintlayout.widget.ConstraintLayout\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"match_parent\">\n\n    </androidx.constraintlayout.widget.ConstraintLayout>\n</layout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/presentation/src/main/res/layout/fragment_info_dolbomi.xml b/presentation/src/main/res/layout/fragment_info_dolbomi.xml
+--- a/presentation/src/main/res/layout/fragment_info_dolbomi.xml	(revision c266359251044d1a783551e81ce3bd0d0d092e6f)
++++ b/presentation/src/main/res/layout/fragment_info_dolbomi.xml	(date 1665054685000)
+@@ -1,5 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<layout xmlns:android="http://schemas.android.com/apk/res/android">
++<layout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto">
+ 
+     <data>
+         <variable
+@@ -11,5 +12,76 @@
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+ 
++        <View
++            android:id="@+id/dolbomiLayout"
++            android:layout_width="match_parent"
++            android:layout_height="190dp"
++            app:layout_constraintTop_toTopOf="parent"
++            android:layout_marginTop="41dp"
++            android:layout_marginHorizontal="18dp"
++            android:background="@color/white"/>
++
++        <TextView
++            style="@style/text_600_15"
++            android:textColor="#9ADBFF"
++            android:id="@+id/dolbomiInfo"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="내 정보"
++            app:layout_constraintStart_toStartOf="@id/dolbomiLayout"
++            app:layout_constraintTop_toTopOf="@id/dolbomiLayout"
++            android:layout_marginTop="12dp"
++            android:layout_marginStart="20dp"/>
++
++        <TextView
++            style="@style/text_600_13"
++            android:textColor="@color/black"
++            android:id="@+id/dolbomiNameTxt"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="이름 : ㅇㅇㅇ"
++            app:layout_constraintStart_toStartOf="@id/dolbomiLayout"
++            app:layout_constraintTop_toBottomOf="@id/dolbomiInfo"
++            android:layout_marginTop="16dp"
++            android:layout_marginStart="20dp"/>\
++
++        <TextView
++            style="@style/text_600_13"
++            android:textColor="@color/black"
++            android:id="@+id/dolbomiTelTxt"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="전화번호 : 010-0000-0000"
++            app:layout_constraintStart_toStartOf="@id/dolbomiLayout"
++            app:layout_constraintTop_toBottomOf="@id/dolbomiNameTxt"
++            android:layout_marginTop="10dp"
++            android:layout_marginStart="20dp"/>
++
++        <Button
++            style="@style/text_600_15"
++            android:textColor="@color/white"
++            android:layout_width="160dp"
++            android:layout_height="45dp"
++            android:background="@drawable/bg_btn"
++            android:text="정보 수정하기"
++            app:layout_constraintStart_toStartOf="@id/dolbomiLayout"
++            app:layout_constraintEnd_toEndOf="@id/dolbomiLayout"
++            app:layout_constraintBottom_toBottomOf="@id/dolbomiLayout"
++            android:layout_marginBottom="17dp"/>
++
++        <ImageView
++            android:layout_width="60dp"
++            android:layout_height="60dp"
++            app:layout_constraintEnd_toEndOf="@id/dolbomiLayout"
++            app:layout_constraintTop_toTopOf="@id/dolbomiLayout"
++            android:layout_marginEnd="21dp"
++            android:layout_marginTop="12dp"/>
++
++        <androidx.recyclerview.widget.RecyclerView
++            android:layout_width="match_parent"
++            android:layout_height="0dp"
++            app:layout_constraintTop_toBottomOf="@id/dolbomiLayout"
++            app:layout_constraintBottom_toBottomOf="parent"/>
++
+     </androidx.constraintlayout.widget.ConstraintLayout>
+ </layout>
+\ No newline at end of file
+Index: presentation/src/main/res/layout/activity_main_owner.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<layout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\">\n\n    <data>\n\n    </data>\n\n    <androidx.constraintlayout.widget.ConstraintLayout\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"match_parent\">\n\n        <androidx.fragment.app.FragmentContainerView\n            android:id=\"@+id/mainFragmentContainer\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"0dp\"\n            app:layout_constraintTop_toTopOf=\"parent\"\n            app:layout_constraintBottom_toTopOf=\"@id/bottomNavigation\"/>\n\n        <LinearLayout\n            android:id=\"@+id/bottomNavigation\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"60dp\"\n            app:layout_constraintBottom_toBottomOf=\"parent\"\n            android:orientation=\"horizontal\"\n            android:background=\"@color/white\">\n            <androidx.appcompat.widget.AppCompatButton\n                android:id=\"@+id/jobBtn\"\n                style=\"@style/text_600_18\"\n                android:layout_width=\"0dp\"\n                android:layout_height=\"match_parent\"\n                android:layout_marginVertical=\"10dp\"\n                android:layout_marginHorizontal=\"15dp\"\n                android:layout_weight=\"5\"\n                android:text=\"일자리\"\n                android:textColor=\"@color/white\"\n                android:background=\"@drawable/bg_tab_selected\"/>\n            <View\n                android:layout_width=\"3dp\"\n                android:layout_height=\"match_parent\"\n                android:background=\"@drawable/bg_divide\"\n                android:layout_marginVertical=\"10dp\"/>\n            <androidx.appcompat.widget.AppCompatButton\n                android:id=\"@+id/infoBtn\"\n                style=\"@style/text_600_18\"\n                android:layout_width=\"0dp\"\n                android:layout_height=\"match_parent\"\n                android:layout_marginVertical=\"10dp\"\n                android:layout_marginHorizontal=\"15dp\"\n                android:layout_weight=\"5\"\n                android:text=\"내 정보\"\n                android:background=\"@null\"/>\n        </LinearLayout>\n\n    </androidx.constraintlayout.widget.ConstraintLayout>\n</layout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/presentation/src/main/res/layout/activity_main_owner.xml b/presentation/src/main/res/layout/activity_main_owner.xml
+--- a/presentation/src/main/res/layout/activity_main_owner.xml	(revision c266359251044d1a783551e81ce3bd0d0d092e6f)
++++ b/presentation/src/main/res/layout/activity_main_owner.xml	(date 1665053571000)
+@@ -20,13 +20,13 @@
+         <LinearLayout
+             android:id="@+id/bottomNavigation"
+             android:layout_width="match_parent"
+-            android:layout_height="60dp"
++            android:layout_height="55dp"
+             app:layout_constraintBottom_toBottomOf="parent"
+             android:orientation="horizontal"
+             android:background="@color/white">
+             <androidx.appcompat.widget.AppCompatButton
+                 android:id="@+id/jobBtn"
+-                style="@style/text_600_18"
++                style="@style/text_600_15"
+                 android:layout_width="0dp"
+                 android:layout_height="match_parent"
+                 android:layout_marginVertical="10dp"
+@@ -42,7 +42,7 @@
+                 android:layout_marginVertical="10dp"/>
+             <androidx.appcompat.widget.AppCompatButton
+                 android:id="@+id/infoBtn"
+-                style="@style/text_600_18"
++                style="@style/text_600_15"
+                 android:layout_width="0dp"
+                 android:layout_height="match_parent"
+                 android:layout_marginVertical="10dp"
+Index: presentation/src/main/res/values/colors.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n    <color name=\"purple_200\">#FFBB86FC</color>\n    <color name=\"purple_500\">#FF6200EE</color>\n    <color name=\"purple_700\">#FF3700B3</color>\n    <color name=\"teal_200\">#FF03DAC5</color>\n    <color name=\"teal_700\">#FF018786</color>\n    <color name=\"black\">#FF000000</color>\n    <color name=\"white\">#FFFFFFFF</color>\n\n    <color name=\"main\">#9ADBFF</color>\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/presentation/src/main/res/values/colors.xml b/presentation/src/main/res/values/colors.xml
+--- a/presentation/src/main/res/values/colors.xml	(revision c266359251044d1a783551e81ce3bd0d0d092e6f)
++++ b/presentation/src/main/res/values/colors.xml	(date 1665055462000)
+@@ -9,4 +9,5 @@
+     <color name="white">#FFFFFFFF</color>
+ 
+     <color name="main">#9ADBFF</color>
++    <color name="transparent">#00000000</color>
+ </resources>
+\ No newline at end of file
+Index: presentation/src/main/res/layout/fragment_dolbomi_dolbomi.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<layout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\">\n\n    <data>\n        <variable\n            name=\"dolbomiDolbomi\"\n            type=\"com.example.hackathon_2022.ui.dolbomi.DolbomiDolbomiFragment\" />\n    </data>\n\n    <androidx.constraintlayout.widget.ConstraintLayout\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"match_parent\">\n\n        <LinearLayout\n            android:id=\"@+id/topMenu\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"45dp\"\n            android:orientation=\"horizontal\"\n            app:layout_constraintTop_toTopOf=\"parent\"\n            android:layout_marginTop=\"40dp\"\n            android:layout_marginHorizontal=\"12dp\">\n            <androidx.appcompat.widget.AppCompatButton\n                android:id=\"@+id/allBtn\"\n                style=\"@style/text_600_18\"\n                android:layout_width=\"0dp\"\n                android:text=\"전체보기\"\n                android:textColor=\"@color/white\"\n                android:background=\"@drawable/bg_tab_selected\"\n                android:layout_height=\"match_parent\"\n                android:layout_weight=\"5\"\n                android:layout_marginHorizontal=\"3dp\"/>\n            <androidx.appcompat.widget.AppCompatButton\n                android:id=\"@+id/mapBtn\"\n                style=\"@style/text_600_18\"\n                android:text=\"지도보기\"\n                android:layout_width=\"0dp\"\n                android:layout_height=\"match_parent\"\n                android:background=\"@drawable/bg_tab_unselected_white\"\n                android:layout_weight=\"5\"\n                android:layout_marginHorizontal=\"3dp\"/>\n        </LinearLayout>\n        <androidx.fragment.app.FragmentContainerView\n            android:id=\"@+id/dolbomiFragmentContainer\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"0dp\"\n            app:layout_constraintTop_toBottomOf=\"@id/topMenu\"\n            app:layout_constraintBottom_toBottomOf=\"parent\"\n            android:layout_marginTop=\"15dp\"/>\n\n    </androidx.constraintlayout.widget.ConstraintLayout>\n</layout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/presentation/src/main/res/layout/fragment_dolbomi_dolbomi.xml b/presentation/src/main/res/layout/fragment_dolbomi_dolbomi.xml
+--- a/presentation/src/main/res/layout/fragment_dolbomi_dolbomi.xml	(revision c266359251044d1a783551e81ce3bd0d0d092e6f)
++++ b/presentation/src/main/res/layout/fragment_dolbomi_dolbomi.xml	(date 1665054459000)
+@@ -15,14 +15,14 @@
+         <LinearLayout
+             android:id="@+id/topMenu"
+             android:layout_width="match_parent"
+-            android:layout_height="45dp"
++            android:layout_height="35dp"
+             android:orientation="horizontal"
+             app:layout_constraintTop_toTopOf="parent"
+             android:layout_marginTop="40dp"
+             android:layout_marginHorizontal="12dp">
+             <androidx.appcompat.widget.AppCompatButton
+                 android:id="@+id/allBtn"
+-                style="@style/text_600_18"
++                style="@style/text_600_15"
+                 android:layout_width="0dp"
+                 android:text="전체보기"
+                 android:textColor="@color/white"
+@@ -32,7 +32,7 @@
+                 android:layout_marginHorizontal="3dp"/>
+             <androidx.appcompat.widget.AppCompatButton
+                 android:id="@+id/mapBtn"
+-                style="@style/text_600_18"
++                style="@style/text_600_15"
+                 android:text="지도보기"
+                 android:layout_width="0dp"
+                 android:layout_height="match_parent"
+Index: presentation/src/main/java/com/example/hackathon_2022/ui/main/MainOwnerActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.hackathon_2022.ui.main\n\nimport android.widget.Button\nimport com.example.hackathon_2022.ui.base.BaseActivity\nimport com.example.hackathon_2022.ui.dolbomi.DolbomiFragment\nimport com.example.hackathon_2022.ui.info.InfoFragment\nimport com.example.hackathon_2022.ui.job.JobFragment\nimport com.example.hackathon_2022.ui.job.JobOwnerFragment\nimport com.example.hackathon_2022.utils.navItemClick\nimport com.example.presentation.R\nimport com.example.presentation.databinding.ActivityMainOwnerBinding\n\nclass MainOwnerActivity: BaseActivity<ActivityMainOwnerBinding>(R.layout.activity_main_owner) {\n    override fun initView() {\n        initBottomNav()\n    }\n\n    override fun observeEvent() {\n    }\n\n    private fun initBottomNav() {\n        supportFragmentManager.beginTransaction().replace(R.id.mainFragmentContainer, JobOwnerFragment())\n            .commit()\n        binding.jobBtn.setOnClickListener {\n            navItemClick(it as Button, listOf(binding.infoBtn), true) {\n                supportFragmentManager.beginTransaction()\n                    .replace(R.id.mainFragmentContainer, JobOwnerFragment()).commit()\n            }\n        }\n        binding.infoBtn.setOnClickListener {\n            navItemClick(it as Button, listOf(binding.jobBtn), true) {\n                supportFragmentManager.beginTransaction()\n                    .replace(R.id.mainFragmentContainer, InfoFragment()).commit()\n            }\n        }\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/presentation/src/main/java/com/example/hackathon_2022/ui/main/MainOwnerActivity.kt b/presentation/src/main/java/com/example/hackathon_2022/ui/main/MainOwnerActivity.kt
+--- a/presentation/src/main/java/com/example/hackathon_2022/ui/main/MainOwnerActivity.kt	(revision c266359251044d1a783551e81ce3bd0d0d092e6f)
++++ b/presentation/src/main/java/com/example/hackathon_2022/ui/main/MainOwnerActivity.kt	(date 1665053379000)
+@@ -4,6 +4,7 @@
+ import com.example.hackathon_2022.ui.base.BaseActivity
+ import com.example.hackathon_2022.ui.dolbomi.DolbomiFragment
+ import com.example.hackathon_2022.ui.info.InfoFragment
++import com.example.hackathon_2022.ui.info.InfoOwnerFragment
+ import com.example.hackathon_2022.ui.job.JobFragment
+ import com.example.hackathon_2022.ui.job.JobOwnerFragment
+ import com.example.hackathon_2022.utils.navItemClick
+@@ -30,7 +31,7 @@
+         binding.infoBtn.setOnClickListener {
+             navItemClick(it as Button, listOf(binding.jobBtn), true) {
+                 supportFragmentManager.beginTransaction()
+-                    .replace(R.id.mainFragmentContainer, InfoFragment()).commit()
++                    .replace(R.id.mainFragmentContainer, InfoOwnerFragment()).commit()
+             }
+         }
+     }
+Index: presentation/src/main/res/layout/fragment_info_owner.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/presentation/src/main/res/layout/fragment_info_owner.xml b/presentation/src/main/res/layout/fragment_info_owner.xml
+new file mode 100644
+--- /dev/null	(date 1665053516000)
++++ b/presentation/src/main/res/layout/fragment_info_owner.xml	(date 1665053516000)
+@@ -0,0 +1,89 @@
++<?xml version="1.0" encoding="utf-8"?>
++<layout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto">
++
++    <data>
++
++    </data>
++
++    <androidx.constraintlayout.widget.ConstraintLayout
++        android:layout_width="match_parent"
++        android:layout_height="match_parent">
++
++        <View
++            android:id="@+id/ownerLayout"
++            android:layout_width="match_parent"
++            android:layout_height="155dp"
++            app:layout_constraintTop_toTopOf="parent"
++            android:layout_marginTop="41dp"
++            android:layout_marginHorizontal="18dp"
++            android:background="@color/white"/>
++
++        <TextView
++            android:id="@+id/ownerInfo"
++            style="@style/text_600_15"
++            android:textColor="#9ADBFF"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="내 정보"
++            app:layout_constraintStart_toStartOf="@id/ownerLayout"
++            app:layout_constraintTop_toTopOf="@id/ownerLayout"
++            android:layout_marginTop="12dp"
++            android:layout_marginStart="20dp"/>
++
++        <TextView
++            android:id="@+id/ownerNameTxt"
++            style="@style/text_600_13"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="이름 : ㅇㅇㅇ"
++            app:layout_constraintStart_toStartOf="@id/ownerLayout"
++            app:layout_constraintTop_toBottomOf="@id/ownerInfo"
++            android:layout_marginTop="16dp"
++            android:layout_marginStart="20dp"/>\
++
++        <TextView
++            android:id="@+id/ownerTelTxt"
++            style="@style/text_600_13"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="전화번호 : 010-0000-0000"
++            app:layout_constraintStart_toStartOf="@id/ownerLayout"
++            app:layout_constraintTop_toBottomOf="@id/ownerNameTxt"
++            android:layout_marginTop="10dp"
++            android:layout_marginStart="20dp"/>
++
++        <Button
++            style="@style/text_600_15"
++            android:textColor="@color/white"
++            android:layout_width="120dp"
++            android:layout_height="30dp"
++            android:background="@drawable/bg_btn"
++            android:text="정보 수정하기"
++            app:layout_constraintStart_toStartOf="@id/ownerLayout"
++            app:layout_constraintEnd_toEndOf="@id/ownerLayout"
++            app:layout_constraintBottom_toBottomOf="@id/ownerLayout"
++            android:layout_marginBottom="17dp"/>
++
++        <ImageView
++            android:layout_width="60dp"
++            android:layout_height="60dp"
++            app:layout_constraintEnd_toEndOf="@id/ownerLayout"
++            app:layout_constraintTop_toTopOf="@id/ownerLayout"
++            android:layout_marginEnd="21dp"
++            android:layout_marginTop="12dp"/>
++
++        <androidx.recyclerview.widget.RecyclerView
++            android:id="@+id/myCoRecyclerview"
++            android:layout_width="match_parent"
++            app:layout_constraintTop_toBottomOf="@id/ownerLayout"
++            android:layout_height="wrap_content"/>
++
++        <androidx.recyclerview.widget.RecyclerView
++            android:id="@+id/mySupportRecyclerview"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            app:layout_constraintTop_toBottomOf="@id/myCoRecyclerview"/>
++
++    </androidx.constraintlayout.widget.ConstraintLayout>
++</layout>
+\ No newline at end of file
+Index: presentation/src/main/res/drawable/bg_btn.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/presentation/src/main/res/drawable/bg_btn.xml b/presentation/src/main/res/drawable/bg_btn.xml
+new file mode 100644
+--- /dev/null	(date 1665051350673)
++++ b/presentation/src/main/res/drawable/bg_btn.xml	(date 1665051350673)
+@@ -0,0 +1,5 @@
++<?xml version="1.0" encoding="utf-8"?>
++<shape xmlns:android="http://schemas.android.com/apk/res/android">
++    <solid android:color="#9ADBFF"/>
++    <corners android:radius="22dp"/>
++</shape>
+\ No newline at end of file
+Index: presentation/src/main/java/com/example/hackathon_2022/ui/info/InfoOwnerFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/presentation/src/main/java/com/example/hackathon_2022/ui/info/InfoOwnerFragment.kt b/presentation/src/main/java/com/example/hackathon_2022/ui/info/InfoOwnerFragment.kt
+new file mode 100644
+--- /dev/null	(date 1665052624199)
++++ b/presentation/src/main/java/com/example/hackathon_2022/ui/info/InfoOwnerFragment.kt	(date 1665052624199)
+@@ -0,0 +1,14 @@
++package com.example.hackathon_2022.ui.info
++
++import com.example.hackathon_2022.ui.base.BaseFragment
++import com.example.presentation.R
++import com.example.presentation.databinding.FragmentInfoOwnerBinding
++
++class InfoOwnerFragment: BaseFragment<FragmentInfoOwnerBinding>(R.layout.fragment_info_owner) {
++    override fun initView() {
++
++    }
++
++    override fun observeEvent() {
++    }
++}
+\ No newline at end of file
