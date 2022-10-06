@@ -63,12 +63,12 @@ class DolbomiNearFragment: Fragment(), OnMapReadyCallback {
         val marker = MarkerOptions()
         currentLatLng = LatLng(location?.latitude!!, location?.longitude)
         marker.apply {
-            val bitmapDrawable = resources.getDrawable(R.drawable.home) as BitmapDrawable
+            val bitmapDrawable = resources.getDrawable(R.drawable.ic_pin_blue) as BitmapDrawable
             val bitmap = bitmapDrawable.bitmap
             position(currentLatLng)
 //            title(getAddress(requireContext(), currentLatLng.latitude, currentLatLng.longitude))
             title("${getPosition(requireContext(), "대한민국 광주광역시 서구 치평동 1237-4")}")
-            icon(BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 70, 70, false)))
+            icon(BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 200, 230, false)))
         }
         googleMap.addMarker(marker)
         googleMap.setMaxZoomPreference(17f)

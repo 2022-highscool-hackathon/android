@@ -20,12 +20,12 @@ class MainDolbomiActivity: BaseActivity<ActivityMainDolbomiBinding>(R.layout.act
         supportFragmentManager.beginTransaction().replace(R.id.mainFragmentContainer, DolbomiDolbomiFragment()).commit()
         binding.dolbomiBtn.setOnClickListener {
             navItemClick(it as Button, listOf(binding.infoBtn), isBottom = true) {
-                supportFragmentManager.beginTransaction().replace(R.id.mainFragmentContainer, InfoDolbomiFragment()).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.mainFragmentContainer, DolbomiDolbomiFragment()).commit()
             }
         }
         binding.infoBtn.setOnClickListener {
             navItemClick(it as Button, listOf(binding.dolbomiBtn), isBottom = true) {
-                supportFragmentManager.beginTransaction().replace(R.id.mainFragmentContainer, DolbomiDolbomiFragment()).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.mainFragmentContainer, InfoDolbomiFragment()).commit()
             }
         }
     }
