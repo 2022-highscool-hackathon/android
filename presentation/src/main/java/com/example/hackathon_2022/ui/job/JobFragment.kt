@@ -15,14 +15,16 @@ class JobFragment: BaseFragment<FragmentJobBinding>(R.layout.fragment_job) {
     }
 
     private fun initMenuNav() {
-        binding.allBtn.setOnClickListener {
-            navItemClick(it as Button, listOf(binding.recommendBtn, binding.nearBtn))
-        }
+        activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.jobFragmentContainer, JobRecommendFragment())?.commit()
         binding.recommendBtn.setOnClickListener {
-            navItemClick(it as Button, listOf(binding.allBtn, binding.nearBtn))
+            navItemClick(it as Button, listOf(binding.nearBtn)) {
+                activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.jobFragmentContainer, JobRecommendFragment())?.commit()
+            }
         }
         binding.nearBtn.setOnClickListener {
-            navItemClick(it as Button, listOf(binding.allBtn, binding.recommendBtn))
+            navItemClick(it as Button, listOf(binding.recommendBtn)) {
+                activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.jobFragmentContainer, JobNearFragment())?.commit()
+            }
         }
     }
 }
