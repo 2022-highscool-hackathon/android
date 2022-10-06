@@ -11,10 +11,19 @@
         android:layout_height="match_parent">
 
         <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:background="@drawable/map_range"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="10dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/myHome"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:background="@drawable/home"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/ic_my_position"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginEnd="13dp"

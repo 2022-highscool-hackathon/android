@@ -1,8 +1,10 @@
 package com.example.hackathon_2022.ui.signup.old
 
 
+import android.content.Intent
 import android.widget.TextView
 import com.example.hackathon_2022.ui.base.BaseFragment
+import com.example.hackathon_2022.ui.main.MainOldActivity
 import com.example.hackathon_2022.ui.signup.SignUpActivity
 import com.example.hackathon_2022.ui.signup.SignUpActivity.Companion.list_want
 import com.example.presentation.R

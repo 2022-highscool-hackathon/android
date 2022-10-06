@@ -417,9 +417,12 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <View
+                <EditText
                     style="@style/text_400_12"
                     android:layout_width="160dp"
+                    android:hint="시급을 입력해주세요"
+                    android:paddingLeft="18dp"
+                    android:inputType="number"
                     android:layout_height="30dp"
                     android:layout_marginTop="4dp"
                     android:background="@color/white"
@@ -457,6 +460,7 @@
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/supportBtn"
                 style="@style/text_600_15"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"

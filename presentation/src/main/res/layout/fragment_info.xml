@@ -120,6 +120,7 @@
         <ImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:background="@drawable/ic_grandfather"
             app:layout_constraintEnd_toEndOf="@id/infoLayout"
             app:layout_constraintTop_toTopOf="@id/infoLayout"
             android:layout_marginEnd="21dp"
@@ -184,6 +185,7 @@
             android:layout_marginBottom="17dp"/>
 
         <ImageView
+            android:background="@drawable/ic_man"
             android:layout_width="60dp"
             android:layout_height="60dp"
             app:layout_constraintEnd_toEndOf="@id/dolbomiLayout"

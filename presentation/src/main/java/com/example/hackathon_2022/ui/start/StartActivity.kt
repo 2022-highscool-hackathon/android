@@ -23,6 +23,7 @@ class StartActivity : BaseActivity<ActivityStartBinding>(R.layout.activity_start
             btnStart1.setOnClickListener {
                 intent.putExtra("who","노인")
                 startActivity(intent)
+                finish()
             }
             btnStart1.setOnTouchListener(object : OnTouchListener{
                 override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
@@ -42,6 +43,7 @@ class StartActivity : BaseActivity<ActivityStartBinding>(R.layout.activity_start
             btnStart2.setOnClickListener {
                 intent.putExtra("who","돌보미")
                 startActivity(intent)
+                finish()
             }
             btnStart2.setOnTouchListener(object : OnTouchListener{
                 override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
@@ -61,6 +63,7 @@ class StartActivity : BaseActivity<ActivityStartBinding>(R.layout.activity_start
             binding.btnStart3.setOnClickListener {
                 intent.putExtra("who","사장님")
                 startActivity(intent)
+                finish()
             }
             btnStart3.setOnTouchListener(object : OnTouchListener{
                 override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {

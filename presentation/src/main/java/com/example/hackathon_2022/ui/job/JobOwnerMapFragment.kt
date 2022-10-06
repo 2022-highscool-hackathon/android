@@ -25,6 +25,8 @@ class JobOwnerMapFragment: Fragment(), OnMapReadyCallback {
     lateinit var googleMap: GoogleMap
     private lateinit var binding: FragmentJobOwnerMapBinding
     private lateinit var currentLatLng: LatLng
+    val wido = listOf(0.003, 0.002, -0.001, -0.001, 0.005)
+    val gyeongdo = listOf(0.003, -0.0003, -0.0025, 0.0023, 0.0056)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,12 +66,18 @@ class JobOwnerMapFragment: Fragment(), OnMapReadyCallback {
         val marker = MarkerOptions()
         currentLatLng = LatLng(location?.latitude!!, location?.longitude)
         marker.apply {
-            val bitmapDrawable = resources.getDrawable(R.drawable.home) as BitmapDrawable
+            val bitmapDrawable = resources.getDrawable(R.drawable.ic_pin_co) as BitmapDrawable
             val bitmap = bitmapDrawable.bitmap
             position(currentLatLng)
-//            title(getAddress(requireContext(), currentLatLng.latitude, currentLatLng.longitude))
-            title("${getPosition(requireContext(), "대한민국 광주광역시 서구 치평동 1237-4")}")
-            icon(BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 70, 70, false)))
+            icon(BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 150, 170, false)))
+        }
+        for (i in 0 until 5) {
+            googleMap.addMarker(MarkerOptions().apply {
+                val bitmapDrawable = resources.getDrawable(R.drawable.ic_pin_jumpo) as BitmapDrawable
+                val bitmap = bitmapDrawable.bitmap
+                position(LatLng(currentLatLng.latitude + wido[i], currentLatLng.longitude + gyeongdo[i]))
+                icon(BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap, 150, 170, false)))
+            })
         }
         googleMap.addMarker(marker)
         googleMap.setMaxZoomPreference(17f)

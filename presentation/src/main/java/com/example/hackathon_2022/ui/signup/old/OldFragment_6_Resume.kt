@@ -1,7 +1,9 @@
 package com.example.hackathon_2022.ui.signup.old
 
+import android.content.Intent
 import android.util.Log
 import com.example.hackathon_2022.ui.base.BaseFragment
+import com.example.hackathon_2022.ui.main.MainOldActivity
 import com.example.hackathon_2022.ui.signup.SignUpActivity
 import com.example.hackathon_2022.ui.signup.SignUpActivity.Companion.list_want
 import com.example.hackathon_2022.ui.signup.SignUpActivity.Companion.list_what
@@ -15,7 +17,8 @@ class OldFragment_6_Resume : BaseFragment<FragmentOld6ResumeBinding>(R.layout.fr
         textSet()
 
         binding.btnOldResume.setOnClickListener {
-            
+            startActivity(Intent(context, MainOldActivity::class.java))
+            activity?.finish()
         }
         binding.btnOldWhat.setOnClickListener {
             signUpActivity.goFragment("6-2",OldFragment_7_what())
