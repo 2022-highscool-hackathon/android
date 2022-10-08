@@ -23,7 +23,7 @@
             android:id="@+id/et_ceo_num"
             style="@style/sign_edit_text"
             android:layout_marginTop="100dp"
-            android:hint="사업자등록번호를 입력해주세요"/>
+            android:hint="사업자등록번호를 입력해주세요" />
 
         <EditText
             android:id="@+id/et_ceo_store_num"

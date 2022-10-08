@@ -63,7 +63,7 @@
                 android:fontFamily="@font/pretendard_regular"
                 android:gravity="center_vertical"
                 android:includeFontPadding="false"
-                android:text="경험해 본 업무를 선택해주세요"
+                android:text="원하시는 업무를 선택해주세요"
                 android:textColor="#80000000"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toStartOf="@+id/imageView2"

@@ -15,9 +15,13 @@ import com.example.presentation.databinding.FragmentHelper4PasswordBinding
 
 class HelperFragment_4_password : BaseFragment<FragmentHelper4PasswordBinding>(R.layout.fragment_helper_4_password) {
     override fun initView() {
-        binding.etHelperPassword.setOnClickListener {
-            startActivity(Intent(context, MainDolbomiActivity::class.java))
+        passwordCheck()
+
+        binding.btnHelperPassword.setOnClickListener {
+
+            startActivity(Intent(requireContext(), MainDolbomiActivity::class.java))
             activity?.finish()
+
         }
     }
 

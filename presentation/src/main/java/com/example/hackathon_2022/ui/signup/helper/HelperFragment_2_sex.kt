@@ -15,6 +15,8 @@ class HelperFragment_2_sex : BaseFragment<FragmentHelper2SexBinding>(R.layout.fr
     override fun initView() {
         val signUpActivity = (activity as SignUpActivity)
 
+        binding.btnHelperMale.isChecked = true
+
         binding.btnHelperSex.setOnClickListener {
             signUpActivity.goFragment("2", HelperFragment_3_phone_number())
         }

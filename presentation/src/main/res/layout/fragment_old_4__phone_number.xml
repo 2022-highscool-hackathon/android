@@ -12,7 +12,8 @@
         <EditText
             android:id="@+id/et_old_phone_number"
             android:hint="전화번호를 입력해주세요"
-            style="@style/sign_edit_text" />
+            style="@style/sign_edit_text"
+            android:inputType="number"/>
 
         <Button
             android:id="@+id/btn_old_phone_number"
